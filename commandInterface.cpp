@@ -1,4 +1,4 @@
-#include <commandInterface.h>
+#include "commandInterface.h"
 
 using namespace std;
 
@@ -29,15 +29,16 @@ vector<string> CommandInterface::tokenize(string& line) {
 
 StructedInput CommandInterface::getStructedInput(vector<string>& input) {
     if (!isInputSizeGood(input) || input[2] != QUESTION_MARK)
-        ; // throw bad req exception
+        throw exception(); // throw bad req exception
     StructedInput structedInput;
     structedInput.method = input[0];
     structedInput.command = input[1];
     structedInput.args = mapArgs(input);
+    return structedInput;
 }
 
 bool CommandInterface::isInputSizeGood(vector<string>& input) {
-    if (input.size() - 3 % 2 == 0) 
+    if ((input.size() - 3) % 2 == 0) 
         return true;
     return false;
 }

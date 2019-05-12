@@ -2,8 +2,13 @@
 #include <vector>
 #include <string>
 #include <map>
-#include <structedInput.h>
-#include <defines.h>
+#include <functional>
+#include "structedInput.h"
+#include "defines.h"
+#include "post.h"
+#include "get.h"
+#include "put.h"
+#include "delete.h"
 
 // check for repeated arg?
 
@@ -14,6 +19,8 @@ private:
     std::vector<std::string> tokenize(std::string& line);
     StructedInput getStructedInput(std::vector<std::string>& input);
     bool isInputSizeGood(std::vector<std::string>& input);
-    std::map<std::string, std::string> mapArgs(std::vector<std::string>& input);
+    Args mapArgs(std::vector<std::string>& input);
+
+    std::map<std::string, std::function<void(StructedInput)>> functionMap;
 
 };

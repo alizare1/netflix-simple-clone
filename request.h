@@ -1,6 +1,7 @@
 #include "structedInput.h"
 #include <map>
 #include <string>
+#include <functional>
 #include "defines.h"
 
 class Request {
