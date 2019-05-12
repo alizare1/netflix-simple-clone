@@ -1,5 +1,5 @@
 #include "put.h"
 
-void Put::parseInput(StructedInput structedInput) {
-    
+void Put::parseInput(StructedInput& structedInput) {
+
 }

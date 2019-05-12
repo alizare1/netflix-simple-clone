@@ -1,5 +1,5 @@
 #include "post.h"
 
-void Post::parseInput(StructedInput StructedInput) {
-    
+void Post::parseInput(StructedInput& StructedInput) {
+
 }

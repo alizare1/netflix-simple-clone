@@ -1,5 +1,5 @@
 #include "delete.h"
 
-void Delete::parseInput(StructedInput structedInput) {
-    
+void Delete::parseInput(StructedInput& structedInput) {
+
 }

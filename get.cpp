@@ -1,5 +1,5 @@
 #include "get.h"
 
-void Get::parseInput(StructedInput structedInput) {
-    
+void Get::parseInput(StructedInput& structedInput) {
+
 }
