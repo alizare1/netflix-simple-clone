@@ -14,6 +14,7 @@
 
 class CommandInterface {
 public:
+    CommandInterface();
     void run();
 private:
     std::vector<std::string> tokenize(std::string& line);
@@ -22,5 +23,8 @@ private:
     Args mapArgs(std::vector<std::string>& input);
 
     std::map<std::string, std::function<void(StructedInput)>> functionMap;
-
+    Post POST;
+    Delete DELETE;
+    Get GET;
+    Put PUT;
 };

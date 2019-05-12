@@ -2,6 +2,16 @@
 
 using namespace std;
 
+CommandInterface::CommandInterface() {
+    functionMap["POST"] = 
+        [this](StructedInput structedInput){POST.parseInput(structedInput);};
+    functionMap["GET"] = 
+        [this](StructedInput structedInput){GET.parseInput(structedInput);};
+    functionMap["PUT"] = 
+        [this](StructedInput structedInput){PUT.parseInput(structedInput);};
+    functionMap["DELETE"] = 
+        [this](StructedInput structedInput){DELETE.parseInput(structedInput);};
+}
 
 void CommandInterface::run() {
     string line;
@@ -10,7 +20,10 @@ void CommandInterface::run() {
     while (getline(cin, line)) {
         input = tokenize(line);
         structedInput = getStructedInput(input);
-        
+        if(functionMap.find(structedInput.method) != functionMap.end())
+            functionMap[structedInput.method](structedInput);
+        else 
+            ; // throw bad req exception
     }
 }
 
