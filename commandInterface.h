@@ -1,3 +1,6 @@
+#ifndef COM_INTERFACE_H
+#define COM_INTERFACE_H
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -28,3 +31,6 @@ private:
     Get GET;
     Put PUT;
 };
+
+
+#endif

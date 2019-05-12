@@ -1,3 +1,6 @@
+#ifndef REQUEST_H
+#define REQUEST_H
+
 #include "structedInput.h"
 #include <map>
 #include <string>
@@ -11,3 +14,5 @@ public:
 protected:
     // network
 };
+
+#endif
