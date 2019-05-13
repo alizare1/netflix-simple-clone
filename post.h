@@ -20,10 +20,12 @@ private:
     void replyToComment(Args& args);
     void followUser(Args& args);
     void buyFilm(Args& args);
+    void rateFilm(Args& args);
     SignupArgs getSignupArgs(Args& args);
     LoginArgs getLoginArgs (Args& args);
     NewFilmArgs getNewFilmArgs(Args& args);
     ReplyArgs getReplyArgs(Args& args);
+    RateArgs getRateArgs(Args& args);
     std::string hashString(const std::string& str);
     bool isEmailValid(const std::string email);
 

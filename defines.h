@@ -14,6 +14,7 @@
 #define RELPIES "replies"
 #define FOLLOWERS "followers"
 #define BUY "buy"
+#define RATE "rate"
 
 #define EMAIL "email"
 #define USERNAME "username"
@@ -31,7 +32,7 @@
 #define COMMENT_ID "comment_id"
 #define CONTENT "content"
 #define USER_ID "user_id"
-
+#define SCORE "score"
 
 #define TRUE "true"
 #define FALSE "false"

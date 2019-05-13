@@ -39,4 +39,9 @@ struct ReplyArgs {
     int commentId;
 };
 
+struct RateArgs {
+    int score;
+    int filmId;
+};
+
 #endif
