@@ -19,6 +19,8 @@ Post::Post() {
         [this](Args args){ buyFilm(args); };
     functionMap[RATE] =
         [this](Args args){ rateFilm(args); };
+    functionMap[COMMENTS] =
+        [this](Args args){ commentOnFilm(args); };
 }
 
 void Post::parseInput(StructedInput& StructedInput) {
@@ -76,6 +78,11 @@ void Post::buyFilm(Args& args) {
 void Post::rateFilm(Args& args) {
     RateArgs rateArgs = getRateArgs(args);
     // network->rateFilm() ;
+}
+
+void Post::commentOnFilm(Args& args) {
+    CommentArgs commentArgs = getCommentArgs(args);
+    // network->commentOnFilm() ;
 }
 
 SignupArgs Post::getSignupArgs(Args& args) {
@@ -177,4 +184,17 @@ RateArgs Post::getRateArgs(Args& args) {
         throw BadRequest();
     }
     return rateArgs;
+}
+
+CommentArgs Post::getCommentArgs(Args& args) {
+    CommentArgs commentArgs;
+    try {
+        commentArgs.content = args.at(CONTENT);
+        isNumber(args.at(FILM_ID)) ?
+            commentArgs.filmId = stoi(args.at(FILM_ID)) : throw BadRequest();
+    }
+    catch (exception& e) {
+        throw BadRequest();
+    }
+    return commentArgs;
 }

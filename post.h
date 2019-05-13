@@ -21,11 +21,13 @@ private:
     void followUser(Args& args);
     void buyFilm(Args& args);
     void rateFilm(Args& args);
+    void commentOnFilm(Args& args);
     SignupArgs getSignupArgs(Args& args);
     LoginArgs getLoginArgs (Args& args);
     NewFilmArgs getNewFilmArgs(Args& args);
     ReplyArgs getReplyArgs(Args& args);
     RateArgs getRateArgs(Args& args);
+    CommentArgs getCommentArgs(Args& args);
     std::string hashString(const std::string& str);
     bool isEmailValid(const std::string email);
 

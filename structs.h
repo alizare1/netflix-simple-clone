@@ -44,4 +44,9 @@ struct RateArgs {
     int filmId;
 };
 
+struct CommentArgs {
+    int filmId;
+    std::string content;
+};
+
 #endif

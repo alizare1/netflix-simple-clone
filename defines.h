@@ -15,6 +15,7 @@
 #define FOLLOWERS "followers"
 #define BUY "buy"
 #define RATE "rate"
+#define COMMENTS "comments"
 
 #define EMAIL "email"
 #define USERNAME "username"
