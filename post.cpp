@@ -24,6 +24,8 @@ SignupArgs Post::getSignupArgs(Args& args) {
     try {
         signupArgs.username = args.at(USERNAME);
         signupArgs.password = hashString(args.at(PASSWORD));
+        // isEmailValid(args.at(EMAIL)) ? 
+            // signupArgs.email = args.at(EMAIL) : throw bad req exception ;
         signupArgs.email = args.at(EMAIL);
         signupArgs.age = args.at(AGE);
         if (args.find(PUBLISHER) != args.end())
@@ -46,4 +48,10 @@ std::string Post::hashString(const std::string& str) {
         primePow = (primePow * prime) % mod;
     }
     return to_string(hashedStr);
+}
+
+bool Post::isEmailValid(const std::string email) {
+   const std::regex pattern
+      ("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+   return std::regex_match(email, pattern);
 }
