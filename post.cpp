@@ -23,9 +23,9 @@ Post::Post() {
         [this](Args args){ commentOnFilm(args); };
 }
 
-void Post::parseInput(StructedInput& StructedInput) {
-    if (functionMap.find(StructedInput.command) != functionMap.end())
-        functionMap[StructedInput.command](StructedInput.args);
+void Post::parseInput(StructedInput& structedInput) {
+    if (functionMap.find(structedInput.command) != functionMap.end())
+        functionMap[structedInput.command](structedInput.args);
     else 
         throw NotFound();
 }
