@@ -15,7 +15,7 @@ void Post::parseInput(StructedInput& StructedInput) {
     if (functionMap.find(StructedInput.command) != functionMap.end())
         functionMap[StructedInput.command](StructedInput.args);
     else 
-        ; // throw not found exception
+        throw NotFound();
 }
 
 void Post::signup(Args& args) {
@@ -37,22 +37,22 @@ SignupArgs Post::getSignupArgs(Args& args) {
     try {
         signupArgs.username = args.at(USERNAME);
         signupArgs.password = hashString(args.at(PASSWORD));
-        // isEmailValid(args.at(EMAIL)) ? 
-            // signupArgs.email = args.at(EMAIL) : throw bad req exception ;
-        signupArgs.email = args.at(EMAIL);
-        // isNumber(args.at(AGE)) ?
-        //     signupArgs.age = stoi(args.at(AGE)) : throw bad req exception ;
-        signupArgs.age = stoi(args.at(AGE));
+        isEmailValid(args.at(EMAIL)) ? 
+            signupArgs.email = args.at(EMAIL) : throw BadRequest();
+        // signupArgs.email = args.at(EMAIL);
+        isNumber(args.at(AGE)) ?
+            signupArgs.age = stoi(args.at(AGE)) : throw BadRequest();
+        // signupArgs.age = stoi(args.at(AGE));
         if (args.find(PUBLISHER) != args.end())
             if (args.at(PUBLISHER) == TRUE || args.at(PUBLISHER) == FALSE)
                 signupArgs.publisher = args.at(PUBLISHER);
             else 
-                ; // throw bad req exception
+                throw BadRequest();
         else 
             signupArgs.publisher = FALSE;
     }
     catch (exception& e) {
-        ; // throw bad req exception
+        throw BadRequest();
     }
     return signupArgs;
 }
@@ -82,7 +82,7 @@ LoginArgs Post::getLoginArgs(Args& args) {
         loginArgs.password = hashString(args.at(PASSWORD));
     }
     catch (exception& e) {
-        ; // throw bad req exception
+        throw BadRequest();
     }
     return loginArgs;
 }
@@ -93,18 +93,18 @@ NewFilmArgs Post::getNewFilmArgs(Args& args) {
         newFilmArgs.summary = args.at(SUMMARY);
         newFilmArgs.director = args.at(DIRECTOR);
         newFilmArgs.name = args.at(NAME);
-        // isNumber(args.at(PRICE)) ?
-        //     signupArgs.price = stoi(args.at(PRICE)) : throw bad req exception ;
-        // isNumber(args.at(YEAR)) ?
-        //     signupArgs.year = stoi(args.at(YEAR)) : throw bad req exception ;
-        // isNumber(args.at(LENGTH)) ?
-        //     signupArgs.length = stoi(args.at(LENGHT)) : throw bad req exception ;
-        newFilmArgs.price = stoi(args.at(PRICE));
-        newFilmArgs.year = stoi(args.at(PRICE));
-        newFilmArgs.length = stoi(args.at(LENGTH));
+        isNumber(args.at(PRICE)) ?
+            newFilmArgs.price = stoi(args.at(PRICE)) : throw BadRequest() ;
+        isNumber(args.at(YEAR)) ?
+            newFilmArgs.year = stoi(args.at(YEAR)) : throw BadRequest() ;
+        isNumber(args.at(LENGTH)) ?
+            newFilmArgs.length = stoi(args.at(LENGTH)) : throw BadRequest() ;
+        // newFilmArgs.price = stoi(args.at(PRICE));
+        // newFilmArgs.year = stoi(args.at(PRICE));
+        // newFilmArgs.length = stoi(args.at(LENGTH));
     }
     catch (exception& e) {
-        ; // trhow bad req exception ;
+        throw BadRequest() ;
     }
     return newFilmArgs;
 }

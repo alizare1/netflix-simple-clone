@@ -20,10 +20,10 @@ void CommandInterface::run() {
     while (getline(cin, line)) {
         input = tokenize(line);
         structedInput = getStructedInput(input);
-        if(functionMap.find(structedInput.method) != functionMap.end())
+        if (functionMap.find(structedInput.method) != functionMap.end())
             functionMap[structedInput.method](structedInput);
         else 
-            ; // throw bad req exception
+            throw BadRequest();
     }
 }
 
@@ -42,7 +42,7 @@ vector<string> CommandInterface::tokenize(string& line) {
 
 StructedInput CommandInterface::getStructedInput(vector<string>& input) {
     if (!isInputSizeGood(input) || input[2] != QUESTION_MARK)
-        throw exception(); // throw bad req exception
+        throw BadRequest();
     StructedInput structedInput;
     structedInput.method = input[0];
     structedInput.command = input[1];

@@ -4,6 +4,7 @@
 #include <iostream>
 #include "request.h"
 #include "structs.h"
+#include "exceptions.h"
 #include <regex>
 
 class Post : public Request {

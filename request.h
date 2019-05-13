@@ -6,6 +6,7 @@
 #include <string>
 #include <functional>
 #include "defines.h"
+#include "exceptions.h"
 
 class Request {
 public: 
@@ -13,7 +14,7 @@ public:
 
 protected:
     // network
-    friend bool isNumber(std::string str);
+    bool isNumber(std::string str);
 };
 
 #endif

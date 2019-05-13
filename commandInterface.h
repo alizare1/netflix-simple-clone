@@ -6,14 +6,13 @@
 #include <string>
 #include <map>
 #include <functional>
-#include "structedInput.h"
+#include "structs.h"
 #include "defines.h"
 #include "post.h"
 #include "get.h"
 #include "put.h"
 #include "delete.h"
-
-// check for repeated arg?
+#include "exceptions.h"
 
 class CommandInterface {
 public:
