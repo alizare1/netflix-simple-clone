@@ -3,13 +3,13 @@
 using namespace std;
 
 CommandInterface::CommandInterface() {
-    functionMap["POST"] = 
+    functionMap[POST_STR] = 
         [this](StructedInput structedInput){POST.parseInput(structedInput);};
-    functionMap["GET"] = 
+    functionMap[GET_STR] = 
         [this](StructedInput structedInput){GET.parseInput(structedInput);};
-    functionMap["PUT"] = 
+    functionMap[PUT_STR] = 
         [this](StructedInput structedInput){PUT.parseInput(structedInput);};
-    functionMap["DELETE"] = 
+    functionMap[DELETE_STR] = 
         [this](StructedInput structedInput){DELETE.parseInput(structedInput);};
 }
 
