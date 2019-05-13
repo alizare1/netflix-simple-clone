@@ -19,6 +19,7 @@ private:
     void doMoneyCommand(Args& args);
     void replyToComment(Args& args);
     void followUser(Args& args);
+    void buyFilm(Args& args);
     SignupArgs getSignupArgs(Args& args);
     LoginArgs getLoginArgs (Args& args);
     NewFilmArgs getNewFilmArgs(Args& args);

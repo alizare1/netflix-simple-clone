@@ -13,6 +13,7 @@
 #define MONEY "money"
 #define RELPIES "replies"
 #define FOLLOWERS "followers"
+#define BUY "buy"
 
 #define EMAIL "email"
 #define USERNAME "username"

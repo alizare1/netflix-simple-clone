@@ -15,6 +15,8 @@ Post::Post() {
         [this](Args args){ replyToComment(args); };
     functionMap[FOLLOWERS] = 
         [this](Args args){ followUser(args); };
+    functionMap[BUY] =
+        [this](Args args){ buyFilm(args); };
 }
 
 void Post::parseInput(StructedInput& StructedInput) {
@@ -43,7 +45,7 @@ void Post::doMoneyCommand(Args& args) {
     if (args.size() == 0)
         ; // network->recieveMoney();
     else {
-        if (args.find(AMOUNT) == args.end())
+        if(!mapHasKey(args, AMOUNT))
             throw BadRequest();
         if (isNumber(args[AMOUNT])) 
             ;// network->addMoney(stoi(args[AMOUNT]));
@@ -54,15 +56,19 @@ void Post::doMoneyCommand(Args& args) {
 
 void Post::replyToComment(Args& args) {
     ReplyArgs replyArgs = getReplyArgs(args);
-    cout << replyArgs.content << endl;
     // network->replyToComment();
 }
 
 void Post::followUser(Args& args) {
-    if (args.find(USER_ID) == args.end())
+    if (!mapHasKey(args, USER_ID))
         throw BadRequest();
     // isNumber(args[USER_ID]) : network->follow() ? throw BadRequest();
-    cout << args[USER_ID];
+}
+
+void Post::buyFilm(Args& args) {
+    if (!mapHasKey(args, FILM_ID))
+        throw BadRequest();
+    // isNumber(args[FILM_ID]) : network->buyFilm() ? throw BadRequest();
 }
 
 SignupArgs Post::getSignupArgs(Args& args) {
@@ -74,7 +80,7 @@ SignupArgs Post::getSignupArgs(Args& args) {
             signupArgs.email = args.at(EMAIL) : throw BadRequest();
         isNumber(args.at(AGE)) ?
             signupArgs.age = stoi(args.at(AGE)) : throw BadRequest();
-        if (args.find(PUBLISHER) != args.end())
+        if (mapHasKey(args, PUBLISHER))
             if (args.at(PUBLISHER) == TRUE || args.at(PUBLISHER) == FALSE)
                 signupArgs.publisher = args.at(PUBLISHER);
             else 
