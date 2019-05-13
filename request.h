@@ -13,6 +13,7 @@ public:
 
 protected:
     // network
+    friend bool isNumber(std::string str);
 };
 
 #endif
