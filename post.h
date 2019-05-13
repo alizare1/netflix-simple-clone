@@ -13,6 +13,7 @@ public:
 private:
     void signup(Args& args);
     SignupArgs getSignupArgs(Args& args);
+    std::string hashString(const std::string& str);
 
     std::map<std::string, std::function<void(Args)> > functionMap;
 };
