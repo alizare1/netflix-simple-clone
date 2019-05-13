@@ -10,6 +10,7 @@
 #define LOGIN "login"
 #define SIGNUP "signup"
 #define FILMS "films"
+#define MONEY "money"
 
 #define EMAIL "email"
 #define USERNAME "username"
@@ -22,6 +23,7 @@
 #define LENGTH "length"
 #define PRICE "price"
 #define DIRECTOR "director"
+#define AMOUNT "amount"
 
 
 #define TRUE "true"

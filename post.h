@@ -16,6 +16,7 @@ private:
     void signup(Args& args);
     void login(Args& args);
     void newFilm(Args& args);
+    void doMoneyCommand(Args& args);
     SignupArgs getSignupArgs(Args& args);
     LoginArgs getLoginArgs (Args& args);
     NewFilmArgs getNewFilmArgs(Args& args);

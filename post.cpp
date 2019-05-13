@@ -9,6 +9,8 @@ Post::Post() {
         [this](Args args){ login(args); };
     functionMap[FILMS] =
         [this](Args args){ newFilm(args); };
+    functionMap[MONEY] =
+        [this](Args args){ doMoneyCommand(args); };
 }
 
 void Post::parseInput(StructedInput& StructedInput) {
@@ -25,11 +27,25 @@ void Post::signup(Args& args) {
 
 void Post::login(Args& args) {
     LoginArgs loginArgs = getLoginArgs(args);
-    // network->loging();
+    // network->login();
 }
 
 void Post::newFilm(Args& args) {
+    NewFilmArgs newFilmArgs = getNewFilmArgs(args);
+    // network->newFilm();
+}
 
+void Post::doMoneyCommand(Args& args) {
+    if (args.size() == 0)
+        ; // network->recieveMoney();
+    else {
+        if (args.find(AMOUNT) == args.end())
+            throw BadRequest();
+        if (isNumber(args[AMOUNT])) 
+            ;// network->addMoney(stoi(args[AMOUNT]));
+        else
+            throw BadRequest();
+    }
 }
 
 SignupArgs Post::getSignupArgs(Args& args) {
@@ -99,9 +115,6 @@ NewFilmArgs Post::getNewFilmArgs(Args& args) {
             newFilmArgs.year = stoi(args.at(YEAR)) : throw BadRequest() ;
         isNumber(args.at(LENGTH)) ?
             newFilmArgs.length = stoi(args.at(LENGTH)) : throw BadRequest() ;
-        // newFilmArgs.price = stoi(args.at(PRICE));
-        // newFilmArgs.year = stoi(args.at(PRICE));
-        // newFilmArgs.length = stoi(args.at(LENGTH));
     }
     catch (exception& e) {
         throw BadRequest() ;
