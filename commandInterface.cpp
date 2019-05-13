@@ -19,11 +19,13 @@ void CommandInterface::run() {
     StructedInput structedInput;
     while (getline(cin, line)) {
         input = tokenize(line);
-        structedInput = getStructedInput(input);
-        if (functionMap.find(structedInput.method) != functionMap.end())
+        try {
+            structedInput = getStructedInput(input);
             functionMap[structedInput.method](structedInput);
-        else 
-            throw BadRequest();
+        }
+        catch (exception& e) {
+            cout << e.what();
+        }
     }
 }
 
@@ -41,17 +43,37 @@ vector<string> CommandInterface::tokenize(string& line) {
 }
 
 StructedInput CommandInterface::getStructedInput(vector<string>& input) {
-    if (!isInputSizeGood(input) || input[2] != QUESTION_MARK)
+    if (!isReqGood(input))
         throw BadRequest();
     StructedInput structedInput;
     structedInput.method = input[0];
     structedInput.command = input[1];
-    structedInput.args = mapArgs(input);
+    if (hasArgs(input))
+        structedInput.args = mapArgs(input);
     return structedInput;
+}
+
+bool CommandInterface::isReqGood(vector<string>& input) {
+    if (input.size() < 2)
+        return false;
+    if (functionMap.find(input[0]) == functionMap.end())
+        return false;
+    if (input.size() == 2)
+        return true;
+    if (input[2] != QUESTION_MARK)
+        return false;
+    return isInputSizeGood(input);
+
 }
 
 bool CommandInterface::isInputSizeGood(vector<string>& input) {
     if ((input.size() - 3) % 2 == 0) 
+        return true;
+    return false;
+}
+
+bool CommandInterface::hasArgs(vector<string>& input) {
+    if (input.size() > 2)
         return true;
     return false;
 }
