@@ -9,12 +9,20 @@
 
 #define LOGIN "login"
 #define SIGNUP "signup"
+#define FILMS "films"
 
 #define EMAIL "email"
 #define USERNAME "username"
 #define PASSWORD "password"
 #define AGE "age"
 #define PUBLISHER "publisher"
+#define SUMMARY "summary"
+#define NAME "name"
+#define YEAR "year"
+#define LENGTH "length"
+#define PRICE "price"
+#define DIRECTOR "director"
+
 
 #define TRUE "true"
 #define FALSE "false"

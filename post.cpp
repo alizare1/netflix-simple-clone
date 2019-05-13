@@ -7,6 +7,8 @@ Post::Post() {
         [this](Args args){ signup(args); };
     functionMap[LOGIN] = 
         [this](Args args){ login(args); };
+    functionMap[FILMS] =
+        [this](Args args){ newFilm(args); };
 }
 
 void Post::parseInput(StructedInput& StructedInput) {
@@ -26,6 +28,10 @@ void Post::login(Args& args) {
     // network->loging();
 }
 
+void Post::newFilm(Args& args) {
+
+}
+
 SignupArgs Post::getSignupArgs(Args& args) {
     SignupArgs signupArgs;
     try {
@@ -35,8 +41,8 @@ SignupArgs Post::getSignupArgs(Args& args) {
             // signupArgs.email = args.at(EMAIL) : throw bad req exception ;
         signupArgs.email = args.at(EMAIL);
         // isNumber(args.at(AGE)) ?
-        //     signupArgs.age = args.at(AGE) : throw bad req exception ;
-        signupArgs.age = args.at(AGE);
+        //     signupArgs.age = stoi(args.at(AGE)) : throw bad req exception ;
+        signupArgs.age = stoi(args.at(AGE));
         if (args.find(PUBLISHER) != args.end())
             if (args.at(PUBLISHER) == TRUE || args.at(PUBLISHER) == FALSE)
                 signupArgs.publisher = args.at(PUBLISHER);
@@ -79,4 +85,26 @@ LoginArgs Post::getLoginArgs(Args& args) {
         ; // throw bad req exception
     }
     return loginArgs;
+}
+
+NewFilmArgs Post::getNewFilmArgs(Args& args) {
+    NewFilmArgs newFilmArgs;
+    try {
+        newFilmArgs.summary = args.at(SUMMARY);
+        newFilmArgs.director = args.at(DIRECTOR);
+        newFilmArgs.name = args.at(NAME);
+        // isNumber(args.at(PRICE)) ?
+        //     signupArgs.price = stoi(args.at(PRICE)) : throw bad req exception ;
+        // isNumber(args.at(YEAR)) ?
+        //     signupArgs.year = stoi(args.at(YEAR)) : throw bad req exception ;
+        // isNumber(args.at(LENGTH)) ?
+        //     signupArgs.length = stoi(args.at(LENGHT)) : throw bad req exception ;
+        newFilmArgs.price = stoi(args.at(PRICE));
+        newFilmArgs.year = stoi(args.at(PRICE));
+        newFilmArgs.length = stoi(args.at(LENGTH));
+    }
+    catch (exception& e) {
+        ; // trhow bad req exception ;
+    }
+    return newFilmArgs;
 }
