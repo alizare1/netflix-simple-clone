@@ -38,6 +38,8 @@
 #define TRUE "true"
 #define FALSE "false"
 
+#define NOT_STATED -1
+
 typedef std::map<std::string, std::string> Args;
 
 #endif

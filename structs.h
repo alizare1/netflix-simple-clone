@@ -49,4 +49,18 @@ struct CommentArgs {
     std::string content;
 };
 
+struct EditFilmArgs {
+    int filmId;
+    std::string name;
+    std::string summary;
+    std::string director;
+    int year;
+    int length;
+    int price;
+    EditFilmArgs()
+        : year(NOT_STATED), 
+        length(NOT_STATED),
+        price(NOT_STATED) {}
+};
+
 #endif
