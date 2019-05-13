@@ -9,3 +9,9 @@ bool Request::isNumber(std::string str) {
     }
     return true;
 }
+
+bool Request::mapHasKey(std::map<std::string, std::string>& keyMap, std::string key) {
+    if (keyMap.find(key) != keyMap.end())
+        return true;
+    return false;
+}

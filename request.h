@@ -15,6 +15,7 @@ public:
 protected:
     // network
     bool isNumber(std::string str);
+    bool mapHasKey(std::map<std::string, std::string>& keyMap, std::string key);
 };
 
 #endif
