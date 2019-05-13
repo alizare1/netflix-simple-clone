@@ -4,7 +4,9 @@ using namespace std;
 
 Post::Post() {
     functionMap[SIGNUP] =
-        [this](Args args){signup(args);};
+        [this](Args args){ signup(args); };
+    functionMap[LOGIN] = 
+        [this](Args args){ login(args); };
 }
 
 void Post::parseInput(StructedInput& StructedInput) {
@@ -16,7 +18,12 @@ void Post::parseInput(StructedInput& StructedInput) {
 
 void Post::signup(Args& args) {
     SignupArgs signupArgs = getSignupArgs(args);
-    
+    // network->signup() ;
+}
+
+void Post::login(Args& args) {
+    LoginArgs loginArgs = getLoginArgs(args);
+    // network->loging();
 }
 
 SignupArgs Post::getSignupArgs(Args& args) {
@@ -60,4 +67,16 @@ bool Post::isEmailValid(const std::string email) {
    const std::regex pattern
       ("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
    return std::regex_match(email, pattern);
+}
+
+LoginArgs Post::getLoginArgs(Args& args) {
+    LoginArgs loginArgs;
+    try {
+        loginArgs.username = args.at(USERNAME);
+        loginArgs.password = hashString(args.at(PASSWORD));
+    }
+    catch (exception& e) {
+        ; // throw bad req exception
+    }
+    return loginArgs;
 }

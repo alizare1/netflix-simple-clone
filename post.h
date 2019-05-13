@@ -13,7 +13,9 @@ public:
 
 private:
     void signup(Args& args);
+    void login(Args& args);
     SignupArgs getSignupArgs(Args& args);
+    LoginArgs getLoginArgs (Args& args);
     std::string hashString(const std::string& str);
     bool isEmailValid(const std::string email);
 
