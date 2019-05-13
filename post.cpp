@@ -27,15 +27,21 @@ SignupArgs Post::getSignupArgs(Args& args) {
         // isEmailValid(args.at(EMAIL)) ? 
             // signupArgs.email = args.at(EMAIL) : throw bad req exception ;
         signupArgs.email = args.at(EMAIL);
+        // isNumber(args.at(AGE)) ?
+        //     signupArgs.age = args.at(AGE) : throw bad req exception ;
         signupArgs.age = args.at(AGE);
         if (args.find(PUBLISHER) != args.end())
-            signupArgs.publisher = args.at(PUBLISHER);
+            if (args.at(PUBLISHER) == TRUE || args.at(PUBLISHER) == FALSE)
+                signupArgs.publisher = args.at(PUBLISHER);
+            else 
+                ; // throw bad req exception
         else 
             signupArgs.publisher = FALSE;
     }
     catch (exception& e) {
         ; // throw bad req exception
     }
+    return signupArgs;
 }
 
 std::string Post::hashString(const std::string& str) {
