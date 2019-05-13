@@ -1,7 +1,7 @@
 #ifndef REQUEST_H
 #define REQUEST_H
 
-#include "structedInput.h"
+#include "structs.h"
 #include <map>
 #include <string>
 #include <functional>
