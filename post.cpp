@@ -13,6 +13,8 @@ Post::Post() {
         [this](Args args){ doMoneyCommand(args); };
     functionMap[RELPIES] =
         [this](Args args){ replyToComment(args); };
+    functionMap[FOLLOWERS] = 
+        [this](Args args){ followUser(args); };
 }
 
 void Post::parseInput(StructedInput& StructedInput) {
@@ -54,6 +56,13 @@ void Post::replyToComment(Args& args) {
     ReplyArgs replyArgs = getReplyArgs(args);
     cout << replyArgs.content << endl;
     // network->replyToComment();
+}
+
+void Post::followUser(Args& args) {
+    if (args.find(USER_ID) == args.end())
+        throw BadRequest();
+    // isNumber(args[USER_ID]) : network->follow() ? throw BadRequest();
+    cout << args[USER_ID];
 }
 
 SignupArgs Post::getSignupArgs(Args& args) {
