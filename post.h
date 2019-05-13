@@ -1,14 +1,20 @@
 #ifndef POST_H
 #define POST_H
 
+#include <iostream>
 #include "request.h"
+#include "structs.h"
 
 class Post : public Request {
 public:
+    Post();
     void parseInput(StructedInput& structedInput);
 
 private:
-    std::map<std::string, std::function<void(StructedInput)> > functionMap;
+    void signup(Args& args);
+    SignupArgs getSignupArgs(Args& args);
+
+    std::map<std::string, std::function<void(Args)> > functionMap;
 };
 
 #endif
