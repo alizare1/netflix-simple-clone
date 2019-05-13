@@ -33,4 +33,10 @@ struct NewFilmArgs {
     int price;
 };
 
+struct ReplyArgs {
+    std::string content;
+    int filmId;
+    int commentId;
+};
+
 #endif

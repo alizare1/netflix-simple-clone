@@ -11,6 +11,7 @@
 #define SIGNUP "signup"
 #define FILMS "films"
 #define MONEY "money"
+#define RELPIES "replies"
 
 #define EMAIL "email"
 #define USERNAME "username"
@@ -24,6 +25,9 @@
 #define PRICE "price"
 #define DIRECTOR "director"
 #define AMOUNT "amount"
+#define FILM_ID "film_id"
+#define COMMENT_ID "comment_id"
+#define CONTENT "content"
 
 
 #define TRUE "true"

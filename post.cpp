@@ -11,6 +11,8 @@ Post::Post() {
         [this](Args args){ newFilm(args); };
     functionMap[MONEY] =
         [this](Args args){ doMoneyCommand(args); };
+    functionMap[RELPIES] =
+        [this](Args args){ replyToComment(args); };
 }
 
 void Post::parseInput(StructedInput& StructedInput) {
@@ -48,6 +50,12 @@ void Post::doMoneyCommand(Args& args) {
     }
 }
 
+void Post::replyToComment(Args& args) {
+    ReplyArgs replyArgs = getReplyArgs(args);
+    cout << replyArgs.content << endl;
+    // network->replyToComment();
+}
+
 SignupArgs Post::getSignupArgs(Args& args) {
     SignupArgs signupArgs;
     try {
@@ -55,10 +63,8 @@ SignupArgs Post::getSignupArgs(Args& args) {
         signupArgs.password = hashString(args.at(PASSWORD));
         isEmailValid(args.at(EMAIL)) ? 
             signupArgs.email = args.at(EMAIL) : throw BadRequest();
-        // signupArgs.email = args.at(EMAIL);
         isNumber(args.at(AGE)) ?
             signupArgs.age = stoi(args.at(AGE)) : throw BadRequest();
-        // signupArgs.age = stoi(args.at(AGE));
         if (args.find(PUBLISHER) != args.end())
             if (args.at(PUBLISHER) == TRUE || args.at(PUBLISHER) == FALSE)
                 signupArgs.publisher = args.at(PUBLISHER);
@@ -120,4 +126,19 @@ NewFilmArgs Post::getNewFilmArgs(Args& args) {
         throw BadRequest() ;
     }
     return newFilmArgs;
+}
+
+ReplyArgs Post::getReplyArgs(Args& args) {
+    ReplyArgs replyArgs;
+    try {
+        replyArgs.content = args.at(CONTENT);
+        isNumber(args.at(FILM_ID)) ?
+            replyArgs.filmId = stoi(args.at(FILM_ID)) : throw BadRequest();
+        isNumber(args.at(COMMENT_ID)) ?
+            replyArgs.commentId = stoi(args.at(COMMENT_ID)) : throw BadRequest(); 
+    }
+    catch (exception& e) {
+        throw BadRequest();
+    }
+    return replyArgs;
 }
