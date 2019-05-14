@@ -80,4 +80,9 @@ struct SearchFilmsArgs {
 
 };
 
+struct DeleteCommentArgs {
+    int filmId;
+    int commentId;
+};
+
 #endif
