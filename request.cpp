@@ -24,7 +24,7 @@ bool Request::mapHasKey(std::map<std::string, std::string>& keyMap, std::string 
 }
 
 bool Request::functionMapHasCommand(std::string& command) {
-    if (functionMap.find(command) != functionMap.end())
+    if (functionMap.count(command))
         return true;
     return false;
 }
