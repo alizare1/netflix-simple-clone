@@ -16,6 +16,7 @@
 #define BUY "buy"
 #define RATE "rate"
 #define COMMENTS "comments"
+#define PUBLISHED "published"
 
 #define EMAIL "email"
 #define USERNAME "username"
@@ -34,6 +35,10 @@
 #define CONTENT "content"
 #define USER_ID "user_id"
 #define SCORE "score"
+#define MIN_RATE "min_rate"
+#define MIN_YEAR "min_year"
+#define MAX_RATE "max_rate"
+#define MAX_YEAR "max_year"
 
 #define TRUE "true"
 #define FALSE "false"

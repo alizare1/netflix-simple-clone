@@ -57,10 +57,27 @@ struct EditFilmArgs {
     int year;
     int length;
     int price;
-    EditFilmArgs()
-        : year(NOT_STATED), 
+    EditFilmArgs():
+        year(NOT_STATED), 
         length(NOT_STATED),
         price(NOT_STATED) {}
+};
+
+struct PublishedFilmsArgs {
+    std::string name;
+    std::string director;
+    int minRate;
+    int maxRate;
+    int minYear;
+    int maxYear;
+    int price;
+    PublishedFilmsArgs():
+        minYear(NOT_STATED),
+        maxYear(NOT_STATED),
+        minRate(NOT_STATED),
+        maxRate(NOT_STATED),
+        price(NOT_STATED) {}
+
 };
 
 #endif
