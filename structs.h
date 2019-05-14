@@ -63,7 +63,7 @@ struct EditFilmArgs {
         price(NOT_STATED) {}
 };
 
-struct PublishedFilmsArgs {
+struct SearchFilmsArgs {
     std::string name;
     std::string director;
     int minRate;
@@ -71,7 +71,7 @@ struct PublishedFilmsArgs {
     int minYear;
     int maxYear;
     int price;
-    PublishedFilmsArgs():
+    SearchFilmsArgs():
         minYear(NOT_STATED),
         maxYear(NOT_STATED),
         minRate(NOT_STATED),

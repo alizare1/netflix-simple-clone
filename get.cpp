@@ -7,22 +7,30 @@ Get::Get() {
         [this](Args args){ getFollowers(args); };
     functionMap[PUBLISHED] =
         [this](Args args){ getPublishedFilms(args); };
+    functionMap[FILMS] =
+        [this](Args args){ getFilms(args); };
 }
 
 void Get::getFollowers(Args& args) {
-    // if (args.size() > 2)
-    //     throw BadRequest();
-
     // network->getFollowers();
 }
 
 void Get::getPublishedFilms(Args& args) {
-    PublishedFilmsArgs publishedArgs = getPublishedArgs(args);
+    SearchFilmsArgs publishedArgs = getSearchArgs(args);
     // network->getPublishedFilms();
 }
 
-PublishedFilmsArgs Get::getPublishedArgs(Args& args) {
-    PublishedFilmsArgs publishedArgs;
+void Get::getFilms(Args& args) {
+    if (mapHasKey(args, FILM_ID)) {
+        ;// isNumber(args.at(FILM_ID)) ?
+        //     network->showFilmInfo() : throw BadRequest();
+    }
+    SearchFilmsArgs publishedArgs = getSearchArgs(args);
+    // network-> searchFilm();
+}
+
+SearchFilmsArgs Get::getSearchArgs(Args& args) {
+    SearchFilmsArgs publishedArgs;
     if (mapHasKey(args, NAME))
         publishedArgs.name = args[NAME];
     if (mapHasKey(args, DIRECTOR))

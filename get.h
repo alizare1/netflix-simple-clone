@@ -10,7 +10,8 @@ public:
 private:
     void getFollowers(Args& args);
     void getPublishedFilms(Args& args);
-    PublishedFilmsArgs getPublishedArgs(Args& args);
+    void getFilms(Args& args);
+    SearchFilmsArgs getSearchArgs(Args& args);
 };
 
 #endif
