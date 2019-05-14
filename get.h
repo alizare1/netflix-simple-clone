@@ -5,10 +5,10 @@
 
 class Get : public Request {
 public:
-    void parseInput(StructedInput& structedInput);
+    Get();
 
 private:
-    std::map<std::string, std::function<void(StructedInput)>> functionMap;
+    void getFollowers(Args& args);
 };
 
 #endif
