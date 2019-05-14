@@ -11,6 +11,7 @@ private:
     void getFollowers(Args& args);
     void getPublishedFilms(Args& args);
     void getFilms(Args& args);
+    void showPurchasedFilms(Args& args);
     SearchFilmsArgs getSearchArgs(Args& args);
 };
 

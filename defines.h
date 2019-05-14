@@ -17,6 +17,7 @@
 #define RATE "rate"
 #define COMMENTS "comments"
 #define PUBLISHED "published"
+#define PURCHASED "purchased"
 
 #define EMAIL "email"
 #define USERNAME "username"
