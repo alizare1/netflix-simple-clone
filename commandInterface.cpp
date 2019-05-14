@@ -81,6 +81,8 @@ bool CommandInterface::hasArgs(vector<string>& input) {
 map<string,string> CommandInterface::mapArgs(vector<string>& input) {
     map<string, string> args;
     for (int i = 3; i < input.size() - 1; i += 2) {
+        if (args.count(input[i]))
+            throw BadRequest();
         args.insert(make_pair(input[i], input[i + 1]));
     }
     return args;
