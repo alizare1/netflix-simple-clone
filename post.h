@@ -10,7 +10,6 @@
 class Post : public Request {
 public:
     Post();
-    void parseInput(StructedInput& structedInput);
 
 private:
     void signup(Args& args);
@@ -31,7 +30,7 @@ private:
     std::string hashString(const std::string& str);
     bool isEmailValid(const std::string email);
 
-    std::map<std::string, std::function<void(Args)> > functionMap;
+    // FunctionMap functionMap;
 };
 
 #endif

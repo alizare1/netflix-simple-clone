@@ -7,13 +7,6 @@ Put::Put() {
         [this](Args args){ editFilm(args); };
 }
 
-void Put::parseInput(StructedInput& structedInput) {
-    if (functionMap.find(structedInput.command) != functionMap.end())
-        functionMap[structedInput.command](structedInput.args);
-    else 
-        throw NotFound();
-}
-
 void Put::editFilm(Args& args) {
     EditFilmArgs filmArgs = getFilmArgs(args);
     // network->editfilm()

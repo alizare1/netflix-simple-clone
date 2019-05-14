@@ -9,13 +9,11 @@
 class Put : public Request {
 public:
     Put();
-    void parseInput(StructedInput& structedInput);
 
 private:
     void editFilm(Args& args);
     EditFilmArgs getFilmArgs(Args& args);
 
-    std::map<std::string, std::function<void(Args)>> functionMap;
 };
 
 #endif

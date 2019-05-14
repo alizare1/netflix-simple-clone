@@ -23,13 +23,6 @@ Post::Post() {
         [this](Args args){ commentOnFilm(args); };
 }
 
-void Post::parseInput(StructedInput& structedInput) {
-    if (functionMap.find(structedInput.command) != functionMap.end())
-        functionMap[structedInput.command](structedInput.args);
-    else 
-        throw NotFound();
-}
-
 void Post::signup(Args& args) {
     SignupArgs signupArgs = getSignupArgs(args);
     // network->signup() ;
