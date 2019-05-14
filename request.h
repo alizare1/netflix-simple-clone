@@ -5,17 +5,23 @@
 #include <map>
 #include <string>
 #include <functional>
+#include <iostream>
 #include "defines.h"
 #include "exceptions.h"
 
+typedef std::map<std::string, std::function<void(Args)> > FunctionMap;
+
 class Request {
 public: 
-    virtual void parseInput(StructedInput& structedIput) = 0;
+    void parseInput(StructedInput& structedInput);
 
 protected:
     // network
     bool isNumber(std::string str);
+    bool functionMapHasCommand(std::string& command);
     bool mapHasKey(std::map<std::string, std::string>& keyMap, std::string key);
+
+    FunctionMap functionMap;
 };
 
 #endif
