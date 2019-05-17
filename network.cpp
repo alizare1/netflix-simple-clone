@@ -56,11 +56,21 @@ void Network::addNewFilm(NewFilmArgs& args) {
 }
 
 void Network::editFilm(EditFilmArgs& args) {
+    checkFilmOwnership(args.filmId);
+    films[args.filmId]->editFilm(args);
+}
+
+void Network::deleteFilm(int filmId) {
+    checkFilmOwnership(filmId);
+    films[-filmId] = films[filmId];
+    films.erase(filmId);
+}
+
+void Network::checkFilmOwnership(int filmId) {
     if (currPub == nullptr)
         throw PermissionDenied();
-    if (!films.count(args.filmId))
+    if (!films.count(filmId))
         throw NotFound();
-    if(films[args.filmId]->getPublisher() != currPub)
+    if(films[filmId]->getPublisher() != currPub)
         throw PermissionDenied();
-    films[args.filmId]->editFilm(args);
 }
