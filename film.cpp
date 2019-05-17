@@ -124,3 +124,11 @@ void Film::showFilmInfo() {
 void Film::showAsRecom() {
     cout << id << " | " << name << " | " << length << " | " << director;
 }
+
+int Film::getPrice() {
+    return price;
+}
+
+std::string Film::getName() {
+    return name;
+}

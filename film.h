@@ -16,6 +16,8 @@ class Film {
 public:
     Film(NewFilmArgs& args, int _id, Publisher* pub);
     int getId();
+    int getPrice();
+    std::string getName()
     void rate(int score, int userId);
     float getAverageScore();
     void comment(std::string text, User* user);
