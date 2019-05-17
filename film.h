@@ -14,8 +14,9 @@ public:
     Film(NewFilmArgs args, int _id);
     void rate(int score, int userId);
     float getAverageScore();
-    void comment(std::string text);
+    void comment(std::string text, User* user);
     void replyToComment(ReplyArgs reply);
+    Publisher* getPublisher();
 
 private:
     std::string name;

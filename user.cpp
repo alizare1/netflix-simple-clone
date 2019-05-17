@@ -49,3 +49,7 @@ void User::showNewNotifs() {
         newNotifications.erase(newNotifications.begin() + i);
     }
 }
+
+std::string User::getName() {
+    return username;
+}

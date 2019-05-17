@@ -28,8 +28,8 @@ float Film::getAverageScore() {
     return sum / usersScore.size();
 }
 
-void Film::comment(string text) {
-    Comment* cm = new Comment(text, comments.size() + 1);
+void Film::comment(string text, User* user) {
+    Comment* cm = new Comment(text, user, comments.size() + 1, this);
     comments.push_back(cm);
 }
 
@@ -39,4 +39,8 @@ void Film::replyToComment(ReplyArgs reply) {
     if (comments[reply.commentId - 1] == nullptr)
         throw BadRequest();
     comments[reply.commentId - 1]->addReply(reply.content);
+}
+
+Publisher* Film::getPublisher() {
+    return publisher;
 }

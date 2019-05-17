@@ -20,6 +20,7 @@ public:
     void addNotif(std::string notif);
     void showNotifs(int limit);
     void showNewNotifs();
+    std::string getName();
 
 private:
     std::string username;
