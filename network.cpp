@@ -34,3 +34,16 @@ void Network::login(LoginArgs& args) {
     else 
         throw BadRequest();
 }
+
+void Network::addNewFilm(NewFilmArgs& args) {
+    if (currPub == nullptr)
+        throw BadRequest();
+    Film* newFilm = new Film(args, films.size() + 1, currPub);
+    films[newFilm->getId()] = newFilm;
+    for (int i = 0; i < 4; i++) {
+        if (top4[i] == nullptr) {
+            top4[i] = newFilm;
+            break;
+        }
+    }
+}
