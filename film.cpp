@@ -70,3 +70,11 @@ bool Film::isInFilter(SearchFilmsArgs args) {
     return true;
     
 }
+
+ostream& operator<<(ostream& out, Film& film) {
+    out << film.id << " | " << film.name << " | "
+        << film.length << " | " << film.price << " | "
+        << film.getAverageScore() << " | " << film.year
+        << " | " << film.director;
+    return out;
+}
