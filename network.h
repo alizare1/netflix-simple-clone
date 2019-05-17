@@ -49,6 +49,7 @@ private:
     void updateTop4(Film* film);
     void insertTop4(Film* film, int index);
 
+    int netWorkMoney;
     User* currUser;
     Publisher* currPub;
     std::map<int, Film*> films;

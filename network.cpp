@@ -6,6 +6,7 @@ Network::Network() {
     top4 = {nullptr};
     currUser = nullptr;
     currPub = nullptr;
+    netWorkMoney = 0;
 }
 
 void Network::signup(SignupArgs& args) {
@@ -198,6 +199,7 @@ void Network::calculatePublisherCut(Film* film) {
     else 
         PubsCut = 9.5/10 * film->getPrice();
     publishersMoney[film->getPublisher()->getId()] += PubsCut;
+    netWorkMoney += film->getPrice() - PubsCut;
 }
 
 void Network::rateFilm(RateArgs& args) {
