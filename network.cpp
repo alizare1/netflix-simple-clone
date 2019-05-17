@@ -97,3 +97,16 @@ void Network::follow(int PubId) {
         throw NotFound();
     publishers[PubId]->addFollower(currUser);
 }
+
+void Network::addMoney(int amount) {
+    if (currUser == nullptr)
+        throw PermissionDenied();
+    currUser->addMoney(amount);
+}
+
+void Network::withdrawMoney() {
+    if (!isPublisherLoggedIn())
+        throw PermissionDenied();
+    currPub->addMoney(publishersMoney[currPub->getId()]);
+    publishersMoney[currPub->getId()] = 0;
+}
