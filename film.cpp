@@ -40,9 +40,9 @@ void Film::comment(string text, User* user) {
 
 void Film::replyToComment(ReplyArgs reply) {
     if (reply.commentId > comments.size())
-        throw BadRequest();
+        throw NotFound();
     if (comments[reply.commentId - 1] == nullptr)
-        throw BadRequest();
+        throw NotFound();
     comments[reply.commentId - 1]->addReply(reply.content);
 }
 
