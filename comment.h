@@ -6,16 +6,18 @@
 #include <string>
 #include <iostream>
 #include "user.h"
+#include "film.h"
 
 class User;
 
 class Comment {
 public:
-    Comment(std::string _content, int _id);
+    Comment(std::string _content, User* _commenter, int _id, Film*);
     void addReply(std::string reply);
     void printComment();
 private:
     int id;
+    Film* film;
     User* commenter;
     std::string content;
     std::vector<std::string> replies;

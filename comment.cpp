@@ -2,13 +2,17 @@
 
 using namespace std;
 
-Comment::Comment(string _content, int _id) {
+Comment::Comment(string _content, User* _commenter, int _id, Film* _film) {
+    film = _film;
+    commenter = _commenter;
     id = _id;
     content = _content;
 }
 
 void Comment::addReply(string reply) {
     replies.push_back(reply);
+    commenter->addNotif(PUBLISHER + ' ' + film->getPublisher()->getName()
+        + WITH_ID + to_string(film->getPublisher()->getId()) + REPLY_TO_COMMENT);
 }
 
 void Comment::printComment() {
