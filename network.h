@@ -44,7 +44,7 @@ private:
     void checkFilmOwnership(int filmId);
     bool isPublisherLoggedIn();
     bool isLoggedIn();
-    void sendBuyNotif(Film* film);
+    void sendNotif(Film* film, std::string action);
     void calculatePublisherCut(Film* film);
 
     User* currUser;

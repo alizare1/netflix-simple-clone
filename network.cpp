@@ -132,6 +132,7 @@ void Network::commentOnFilm(CommentArgs& args) {
     if (!films.count(args.filmId))
         throw NotFound();
     films[args.filmId]->comment(args.content, currUser);
+    sendNotif(films[args.filmId], COMMENT_ON_FILM);
 }
 
 void Network::searchFilms(SearchFilmsArgs& args) {
@@ -172,14 +173,14 @@ void Network::buyFilm(int filmId) {
     if (!films.count(filmId))
         throw NotFound();
     currUser->buyFilm(films[filmId]);
-    sendBuyNotif(films[filmId]);
+    sendNotif(films[filmId], BUY_YOUR_FILM);
     calculatePublisherCut(films[filmId]);
 }
 
-void Network::sendBuyNotif(Film* film) {
+void Network::sendNotif(Film* film, string action) {
     film->getPublisher()->addNotif (
             USER_NOTIF + currUser->getName() 
-            + WITH_ID + to_string(currUser->getId()) + BUY_YOUR_FILM
+            + WITH_ID + to_string(currUser->getId()) + action
             + film->getName() + WITH_ID + 
             to_string(film->getId()) + "."
         );
@@ -203,4 +204,6 @@ void Network::rateFilm(RateArgs& args) {
     if (!films.count(args.filmId))
         throw NotFound();
     films[args.filmId]->rate(args.score, currUser->getId());
+    sendNotif(films[args.filmId], RATE_YOUR_FILM);
 }
+
