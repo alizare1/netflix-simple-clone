@@ -24,6 +24,8 @@ void Film::rate(int score, int userId) {
 }
 
 float Film::getAverageScore() {
+    if (usersScore.size() == 0)
+        return 0;
     std::map<int, int>::iterator it = usersScore.begin();
     float sum = 0;
     while (it != usersScore.end()) {
