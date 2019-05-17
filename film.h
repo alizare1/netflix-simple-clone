@@ -10,6 +10,7 @@
 #include "structs.h"
 
 class Publisher;
+class Comment;
 
 class Film {
 public:
@@ -19,8 +20,10 @@ public:
     void comment(std::string text, User* user);
     void replyToComment(ReplyArgs reply);
     Publisher* getPublisher();
+    bool isInFilter(SearchFilmsArgs args);
 
 private:
+
     std::string name;
     std::string summary;
     std::string director;
