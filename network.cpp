@@ -2,6 +2,12 @@
 
 using namespace std;
 
+Network::Network() {
+    top4 = {nullptr};
+    currUser = nullptr;
+    currPub = nullptr;
+}
+
 void Network::signup(SignupArgs& args) {
     if (usersByName.count(args.username))
         throw BadRequest();
