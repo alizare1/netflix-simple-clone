@@ -14,6 +14,8 @@ Get::Get(Network* _network)
         [this](Args args){ showPurchasedFilms(args); };
     functionMap[NOTIFICATION] =
         [this](Args args){ showNewNotifs(); };
+    functionMap[NOTIFICATION_READ] =
+        [this](Args args){ showNotifs(args); };
 }
 
 void Get::getFollowers(Args& args) {
@@ -42,6 +44,13 @@ void Get::showPurchasedFilms(Args& args) {
 
 void Get::showNewNotifs() {
     network->showNewNotifs();
+}
+
+void Get::showNotifs(Args& args) {
+    if (mapHasKey(args, LIMIT)) {
+        isNumber(args.at(LIMIT)) ?
+            network->showNotifs(stoi(args.at(LIMIT))) : throw BadRequest();
+    }
 }
 
 SearchFilmsArgs Get::getSearchArgs(Args& args) {

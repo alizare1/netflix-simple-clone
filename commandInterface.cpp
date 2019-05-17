@@ -41,6 +41,7 @@ vector<string> CommandInterface::tokenize(string& line) {
             tokenized.push_back(word);
         word = "";
     }
+    checkNotifRead(tokenized);
     return tokenized;
 }
 
@@ -89,3 +90,14 @@ map<string,string> CommandInterface::mapArgs(vector<string>& input) {
     }
     return args;
 }
+
+void CommandInterface::checkNotifRead(vector<string>& input) {
+    if (input.size() < 6)
+        return;
+    if (input[0] == GET_STR && input[1] == NOTIFICATION && 
+        input[3] == QUESTION_MARK && input[2] == READ) {
+        input[1] = NOTIFICATION_READ;
+        input.erase(input.begin() + 2);
+    }
+}
+

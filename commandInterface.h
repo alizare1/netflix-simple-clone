@@ -25,6 +25,7 @@ private:
     Args mapArgs(std::vector<std::string>& input);
     bool isReqGood(std::vector<std::string>& input);
     bool hasArgs(std::vector<std::string>& input);
+    void checkNotifRead(std::vector<std::string>& input);
 
     std::map<std::string, std::function<void(StructedInput)>> functionMap;
     Post POST;

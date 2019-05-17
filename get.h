@@ -13,6 +13,7 @@ private:
     void getFilms(Args& args);
     void showPurchasedFilms(Args& args);
     void showNewNotifs();
+    void showNotifs(Args& args);
     SearchFilmsArgs getSearchArgs(Args& args);
 };
 

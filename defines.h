@@ -19,6 +19,8 @@
 #define PUBLISHED "published"
 #define PURCHASED "purchased"
 #define NOTIFICATION "notifications"
+#define NOTIFICATION_READ "notificationread"
+#define READ "read"
 
 #define EMAIL "email"
 #define USERNAME "username"
@@ -41,6 +43,7 @@
 #define MIN_YEAR "min_year"
 #define MAX_RATE "max_rate"
 #define MAX_YEAR "max_year"
+#define LIMIT "limit"
 
 #define TRUE "true"
 #define FALSE "false"
