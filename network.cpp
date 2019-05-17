@@ -209,3 +209,22 @@ void Network::rateFilm(RateArgs& args) {
     sendNotif(films[args.filmId], RATE_YOUR_FILM);
 }
 
+void Network::updateTop4(Film* film) {
+    int score = film->getAverageScore();
+    for (int i = 0; i < 4; i++) {
+        if (top4[i] != nullptr) {
+            if (score > top4[i]->getAverageScore()) {
+                insertTop4(film, i);
+                break;
+            }
+        }
+    }
+}
+
+void Network::insertTop4(Film* film, int index) {
+    for (int i = 3 ; i > index; i++) {
+        top4[i] = top4[i - 1];        
+    }
+    top4[index] = film;
+}
+

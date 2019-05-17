@@ -46,6 +46,8 @@ private:
     bool isLoggedIn();
     void sendNotif(Film* film, std::string action);
     void calculatePublisherCut(Film* film);
+    void updateTop4(Film* film);
+    void insertTop4(Film* film, int index);
 
     User* currUser;
     Publisher* currPub;
