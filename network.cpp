@@ -46,6 +46,7 @@ void Network::addNewFilm(NewFilmArgs& args) {
         throw BadRequest();
     Film* newFilm = new Film(args, films.size() + 1, currPub);
     films[newFilm->getId()] = newFilm;
+    currPub->addNewFilm(newFilm);
     for (int i = 0; i < 4; i++) {
         if (top4[i] == nullptr) {
             top4[i] = newFilm;
