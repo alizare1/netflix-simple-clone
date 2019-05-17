@@ -136,10 +136,12 @@ void Network::commentOnFilm(CommentArgs& args) {
 }
 
 void Network::searchFilms(SearchFilmsArgs& args) {
+    cout << GET_FILMS_HEADER << endl;
     std::map<int, Film*>::iterator it = films.begin();
+    int counter = 1;
     while (it != films.end()) {
         if (it->second->isInFilter(args))
-            cout << it->second << endl;
+            cout << counter++ << ". " << *(it->second) << endl;
         it++;
     }
 }
