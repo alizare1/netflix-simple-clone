@@ -4,7 +4,6 @@
 
 #include <vector>
 #include <string>
-#include "film.h"
 #include "structs.h"
 #include <iostream>
 
@@ -21,6 +20,7 @@ public:
     void showNotifs(int limit);
     void showNewNotifs();
     std::string getName();
+    friend std::ostream& operator<<(std::ostream& out, User& user);
 
 protected:
     std::string username;
@@ -37,4 +37,5 @@ protected:
 
 };
 
+#include "film.h"
 #endif

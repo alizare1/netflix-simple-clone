@@ -53,3 +53,9 @@ void User::showNewNotifs() {
 std::string User::getName() {
     return username;
 }
+
+ostream& operator<<(ostream& out, User& user) {
+    out << user.id  << " | " << user.username 
+        << " | " << user.email;
+    return out;
+}
