@@ -8,6 +8,8 @@ void Request::parseInput(StructedInput& structedInput) {
         functionMap[structedInput.command](structedInput.args);
     else 
         throw NotFound();
+    if (structedInput.method != GET_STR)
+        std::cout << "OK" << std::endl;
 }
 
 bool Request::isNumber(std::string str) {
