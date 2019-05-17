@@ -148,3 +148,17 @@ void Network::showPurchasedFilms(SearchFilmsArgs& args) {
         throw PermissionDenied();
     currUser->showPurchasedFilms(args);
 }
+
+void Network::showFilmInfo(int filmId) {
+    if (!isLoggedIn())
+        throw PermissionDenied();
+    if (!films.count(filmId)) 
+        throw NotFound();
+    films[filmId]->showFilmInfo();
+    cout << RECOMMS_INFO << endl;
+    for (int i = 0; i < 4; i++) {
+        if (top4[i] == nullptr)
+            break;
+        cout << i + 1 << ". " << top4[i]->showAsRecom() << endl; 
+    }
+}

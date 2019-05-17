@@ -69,6 +69,7 @@
 #define RATE_INFO "Rate = "
 #define PRICE_INFO "Price = "
 #define COMMENTS_INFO "Comments"
+#define RECOMMS_INFO "Recommendation Film"
 
 typedef std::map<std::string, std::string> Args;
 
