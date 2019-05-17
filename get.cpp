@@ -12,6 +12,8 @@ Get::Get(Network* _network)
         [this](Args args){ getFilms(args); };
     functionMap[PURCHASED] = 
         [this](Args args){ showPurchasedFilms(args); };
+    functionMap[NOTIFICATION] =
+        [this](Args args){ showNewNotifs(); };
 }
 
 void Get::getFollowers(Args& args) {
@@ -36,6 +38,10 @@ void Get::getFilms(Args& args) {
 void Get::showPurchasedFilms(Args& args) {
     SearchFilmsArgs purchasedArgs = getSearchArgs(args);
     network->showPurchasedFilms(purchasedArgs);
+}
+
+void Get::showNewNotifs() {
+    network->showNewNotifs();
 }
 
 SearchFilmsArgs Get::getSearchArgs(Args& args) {

@@ -18,6 +18,7 @@
 #define COMMENTS "comments"
 #define PUBLISHED "published"
 #define PURCHASED "purchased"
+#define NOTIFICATION "notifications"
 
 #define EMAIL "email"
 #define USERNAME "username"
