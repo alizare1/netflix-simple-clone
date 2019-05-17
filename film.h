@@ -25,6 +25,7 @@ public:
     void editFilm(EditFilmArgs& args);
     void deleteComment(int cmId);
     void showFilmInfo();
+    void showAsRecom();
     friend std::ostream& operator<<(std::ostream& out, Film& film);
 
 private:

@@ -70,6 +70,7 @@
 #define PRICE_INFO "Price = "
 #define COMMENTS_INFO "Comments"
 #define RECOMMS_INFO "Recommendation Film"
+#define RECOMMS_HEADER "#. Film Id | Film Name | Film Length | Film Director"
 
 typedef std::map<std::string, std::string> Args;
 

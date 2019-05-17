@@ -120,3 +120,7 @@ void Film::showFilmInfo() {
         cout << comments[i] << endl;
     cout << endl;
 }
+
+void Film::showAsRecom() {
+    cout << id << " | " << name << " | " << length << " | " << director;
+}
