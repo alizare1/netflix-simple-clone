@@ -5,7 +5,7 @@
 
 class Delete : public Request {
 public:
-    Delete();
+    Delete(Network* _network);
 
 private:
     void deleteFilm(Args& args);

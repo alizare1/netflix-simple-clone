@@ -5,11 +5,12 @@
 #include "request.h"
 #include "structs.h"
 #include "exceptions.h"
+#include "network.h"
 #include <regex>
 
 class Post : public Request {
 public:
-    Post();
+    Post(Network* _network);
 
 private:
     void signup(Args& args);
@@ -30,7 +31,6 @@ private:
     std::string hashString(const std::string& str);
     bool isEmailValid(const std::string email);
 
-    // FunctionMap functionMap;
 };
 
 #endif

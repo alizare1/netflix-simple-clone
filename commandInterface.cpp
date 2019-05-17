@@ -1,8 +1,10 @@
 #include "commandInterface.h"
+#include "network.h"
 
 using namespace std;
 
-CommandInterface::CommandInterface() {
+CommandInterface::CommandInterface(Network* network)
+    :POST(network), GET(network), DELETE(network), PUT(network) {
     functionMap[POST_STR] = 
         [this](StructedInput structedInput){POST.parseInput(structedInput);};
     functionMap[GET_STR] = 

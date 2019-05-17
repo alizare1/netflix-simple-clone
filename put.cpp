@@ -2,14 +2,15 @@
 
 using namespace std;
 
-Put::Put() {
+Put::Put(Network* _network)
+    :Request(_network) {
     functionMap[FILMS] =
         [this](Args args){ editFilm(args); };
 }
 
 void Put::editFilm(Args& args) {
     EditFilmArgs filmArgs = getFilmArgs(args);
-    // network->editfilm()
+    network->editFilm(filmArgs);
 }
 
 EditFilmArgs Put::getFilmArgs(Args& args) {

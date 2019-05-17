@@ -8,7 +8,7 @@
 
 class Put : public Request {
 public:
-    Put();
+    Put(Network* _network);
 
 private:
     void editFilm(Args& args);

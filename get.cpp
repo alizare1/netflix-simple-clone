@@ -2,7 +2,8 @@
 
 using namespace std;
 
-Get::Get() {
+Get::Get(Network* _network)
+    :Request(_network) {
     functionMap[FOLLOWERS] =
         [this](Args args){ getFollowers(args); };
     functionMap[PUBLISHED] =
@@ -14,26 +15,26 @@ Get::Get() {
 }
 
 void Get::getFollowers(Args& args) {
-    // network->getFollowers();
+    network->showFollowers();
 }
 
 void Get::getPublishedFilms(Args& args) {
     SearchFilmsArgs publishedArgs = getSearchArgs(args);
-    // network->getPublishedFilms();
+    network->getPublishedFilms(publishedArgs);
 }
 
 void Get::getFilms(Args& args) {
     if (mapHasKey(args, FILM_ID)) {
-        ;// isNumber(args.at(FILM_ID)) ?
-        //     network->showFilmInfo() : throw BadRequest();
+        isNumber(args.at(FILM_ID)) ?
+            network->showFilmInfo(stoi(args.at(FILM_ID))) : throw BadRequest();
     }
-    SearchFilmsArgs publishedArgs = getSearchArgs(args);
-    // network-> searchFilm();
+    SearchFilmsArgs searchArgs = getSearchArgs(args);
+    network->searchFilms(searchArgs);
 }
 
 void Get::showPurchasedFilms(Args& args) {
-    SearchFilmsArgs publishedArgs = getSearchArgs(args);
-    // network->showPurchasedFilms();
+    SearchFilmsArgs purchasedArgs = getSearchArgs(args);
+    network->showPurchasedFilms(purchasedArgs);
 }
 
 SearchFilmsArgs Get::getSearchArgs(Args& args) {

@@ -2,7 +2,8 @@
 
 using namespace std;
 
-Post::Post() {
+Post::Post(Network* _network)
+    :Request(_network) {
     functionMap[SIGNUP] =
         [this](Args args){ signup(args); };
     functionMap[LOGIN] = 
@@ -25,27 +26,27 @@ Post::Post() {
 
 void Post::signup(Args& args) {
     SignupArgs signupArgs = getSignupArgs(args);
-    // network->signup() ;
+    network->signup(signupArgs) ;
 }
 
 void Post::login(Args& args) {
     LoginArgs loginArgs = getLoginArgs(args);
-    // network->login();
+    network->login(loginArgs);
 }
 
 void Post::newFilm(Args& args) {
     NewFilmArgs newFilmArgs = getNewFilmArgs(args);
-    // network->newFilm();
+    network->addNewFilm(newFilmArgs);
 }
 
 void Post::doMoneyCommand(Args& args) {
     if (args.size() == 0)
-        ; // network->recieveMoney();
+        network->withdrawMoney();
     else {
         if(!mapHasKey(args, AMOUNT))
             throw BadRequest();
         if (isNumber(args[AMOUNT])) 
-            ;// network->addMoney(stoi(args[AMOUNT]));
+            network->addMoney(stoi(args[AMOUNT]));
         else
             throw BadRequest();
     }
@@ -53,29 +54,29 @@ void Post::doMoneyCommand(Args& args) {
 
 void Post::replyToComment(Args& args) {
     ReplyArgs replyArgs = getReplyArgs(args);
-    // network->replyToComment();
+    network->replyToComment(replyArgs);
 }
 
 void Post::followUser(Args& args) {
     if (!mapHasKey(args, USER_ID))
         throw BadRequest();
-    // isNumber(args[USER_ID]) : network->follow() ? throw BadRequest();
+    isNumber(args[USER_ID]) ? network->follow(stoi(args[USER_ID])) : throw BadRequest();
 }
 
 void Post::buyFilm(Args& args) {
     if (!mapHasKey(args, FILM_ID))
         throw BadRequest();
-    // isNumber(args[FILM_ID]) : network->buyFilm() ? throw BadRequest();
+    isNumber(args[FILM_ID]) ? network->buyFilm(stoi(args[FILM_ID])) : throw BadRequest();
 }
 
 void Post::rateFilm(Args& args) {
     RateArgs rateArgs = getRateArgs(args);
-    // network->rateFilm() ;
+    network->rateFilm(rateArgs) ;
 }
 
 void Post::commentOnFilm(Args& args) {
     CommentArgs commentArgs = getCommentArgs(args);
-    // network->commentOnFilm() ;
+    network->commentOnFilm(commentArgs) ;
 }
 
 SignupArgs Post::getSignupArgs(Args& args) {

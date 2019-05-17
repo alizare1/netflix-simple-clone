@@ -16,7 +16,7 @@
 
 class CommandInterface {
 public:
-    CommandInterface();
+    CommandInterface(Network* network);
     void run();
 private:
     std::vector<std::string> tokenize(std::string& line);

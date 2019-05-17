@@ -1,6 +1,7 @@
 #include "request.h"
 
-
+Request::Request(Network* _network)
+    :network(_network) {}
 
 void Request::parseInput(StructedInput& structedInput) {
     if (functionMapHasCommand(structedInput.command))

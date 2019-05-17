@@ -1,6 +1,7 @@
 #include "delete.h"
 
-Delete::Delete() {
+Delete::Delete(Network* _network)
+    :Request(_network) {
     functionMap[FILMS] =
         [this](Args args){ deleteFilm(args); };
     functionMap[COMMENTS] =
@@ -9,8 +10,8 @@ Delete::Delete() {
 
 void Delete::deleteFilm(Args& args) {
     if (mapHasKey(args, FILM_ID)) {
-        ;// isNumber(args.at(FILM_ID)) ?
-        //     network->deleteFilm() : throw BadRequest();
+        isNumber(args.at(FILM_ID)) ?
+            network->deleteFilm(stoi(args.at(FILM_ID))) : throw BadRequest();
     }
     else
         throw BadRequest();
@@ -18,7 +19,7 @@ void Delete::deleteFilm(Args& args) {
 
 void Delete::deleteComment(Args& args) {
     DeleteCommentArgs commentArgs = getDeleteCommentArgs(args);
-    // network->deleteComment();
+    network->deleteComment(commentArgs);
 }
 
 DeleteCommentArgs Delete::getDeleteCommentArgs(Args& args) {

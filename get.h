@@ -5,7 +5,7 @@
 
 class Get : public Request {
 public:
-    Get();
+    Get(Network* _network);
 
 private:
     void getFollowers(Args& args);
