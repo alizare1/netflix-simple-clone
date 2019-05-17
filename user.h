@@ -22,7 +22,7 @@ public:
     void showNewNotifs();
     std::string getName();
 
-private:
+protected:
     std::string username;
     std::string password;
     std::string email;
