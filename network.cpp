@@ -192,12 +192,12 @@ void Network::sendNotif(Film* film, string action) {
 void Network::calculatePublisherCut(Film* film) {
     float score = film->getAverageScore();
     int PubsCut;
-    if (score < 5)
-        PubsCut = 8.0/10 * film->getPrice();
-    else if (score < 8)
-        PubsCut = 9.0/10 * film->getPrice();
+    if (score < LOW_SCORE_MAX)
+        PubsCut = LOW_SCORE_RATIO * film->getPrice();
+    else if (score < AVERAGE_SCORE_MAX)
+        PubsCut = AVERAGE_SCORE_RATIO * film->getPrice();
     else 
-        PubsCut = 9.5/10 * film->getPrice();
+        PubsCut = HIGH_SCORE_RATIO * film->getPrice();
     publishersMoney[film->getPublisher()->getId()] += PubsCut;
     netWorkMoney += film->getPrice() - PubsCut;
 }

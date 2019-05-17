@@ -74,6 +74,12 @@
 #define RECOMMS_INFO "Recommendation Film"
 #define RECOMMS_HEADER "#. Film Id | Film Name | Film Length | Film Director"
 
+#define LOW_SCORE_MAX 5
+#define AVERAGE_SCORE_MAX 8
+#define LOW_SCORE_RATIO 0.8
+#define AVERAGE_SCORE_RATIO 0.9
+#define HIGH_SCORE_RATIO 0.95
+
 typedef std::map<std::string, std::string> Args;
 
 #endif
