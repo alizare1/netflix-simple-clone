@@ -112,7 +112,7 @@ void Film::deleteComment(int cmId) {
 
 void Film::showFilmInfo() {
     cout << SHOW_DETAILS_OF_FILM << name << endl
-        << ID << id << endl << DIRECTOR << director 
+        << ID << id << endl << DIRECTOR_INFO << director 
         << endl << LENGTH_INFO << length << endl
         << YEAR_INFO << year << endl << SUMMARY_INFO
         << summary << endl << RATE_INFO << getAverageScore()

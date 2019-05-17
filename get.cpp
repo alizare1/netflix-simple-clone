@@ -27,6 +27,7 @@ void Get::getFilms(Args& args) {
     if (mapHasKey(args, FILM_ID)) {
         isNumber(args.at(FILM_ID)) ?
             network->showFilmInfo(stoi(args.at(FILM_ID))) : throw BadRequest();
+        return;
     }
     SearchFilmsArgs searchArgs = getSearchArgs(args);
     network->searchFilms(searchArgs);
