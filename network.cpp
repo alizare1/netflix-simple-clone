@@ -120,3 +120,17 @@ void Network::getPublishedFilms(SearchFilmsArgs& args) {
         throw PermissionDenied();
     currPub->showFilms(args);
 }
+
+void Network::replyToComment(ReplyArgs& args) {
+    checkFilmOwnership(args.filmId);
+    films[args.filmId]->replyToComment(args);
+}
+
+void Network::commentOnFilm(CommentArgs& args) {
+    if (isLoggedIn())
+        throw PermissionDenied();
+    if (!films.count(args.filmId))
+        throw NotFound();
+    films[args.filmId]->comment(args.content, currUser);
+}
+
