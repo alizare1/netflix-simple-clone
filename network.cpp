@@ -159,6 +159,9 @@ void Network::showFilmInfo(int filmId) {
     for (int i = 0; i < 4; i++) {
         if (top4[i] == nullptr)
             break;
-        cout << i + 1 << ". " << top4[i]->showAsRecom() << endl; 
+        cout << RECOMMS_HEADER << endl
+            << i + 1 << ". ";
+        top4[i]->showAsRecom();
+        cout << endl; 
     }
 }
