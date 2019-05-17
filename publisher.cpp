@@ -26,7 +26,7 @@ void Publisher::showFilms(SearchFilmsArgs args) {
     int num = 1;
     for (int i = 0; i < producedFilms.size(); i++) {
         if (producedFilms[i]->isInFilter(args))
-            cout << num++ << ". " << producedFilms[i] << endl;
+            cout << num++ << ". " << *(producedFilms[i]) << endl;
     }
 }
 

@@ -64,7 +64,7 @@ void User::showPurchasedFilms(SearchFilmsArgs& args) {
     cout << GET_FILMS_HEADER << endl;
     for (int i = 0; i < boughtFilms.size(); i++) {
         if (boughtFilms[i]->isInFilter(args))
-            cout << boughtFilms[i] << endl;
+            cout << *(boughtFilms[i]) << endl;
     }
 }
 
