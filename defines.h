@@ -48,6 +48,14 @@
 
 #define NOT_STATED -1
 
+#define WITH_ID " with id "
+#define FOLLOW_YOU " follow you."
+#define REPLY_TO_COMMENT " reply to your comment."
+#define REGISTER_NEW_FILM " register new film."
+#define BUY_YOUR_FILM " buy your film "
+#define RATE_YOUR_FILM " rate your film "
+#define COMMENT_ON_FILM " comment on your film "
+
 typedef std::map<std::string, std::string> Args;
 
 #endif
