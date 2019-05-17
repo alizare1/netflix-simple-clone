@@ -222,3 +222,14 @@ void Network::rateFilm(RateArgs& args) {
     sendNotif(films[args.filmId], RATE_YOUR_FILM);
 }
 
+void Network::showNewNotifs() {
+    if (!isLoggedIn())
+        throw PermissionDenied();
+    currUser->showNewNotifs();
+}
+
+void Network::showNotifs(int limit) {
+    if (!isLoggedIn())
+        throw PermissionDenied();
+    currUser->showNotifs(limit);
+}
