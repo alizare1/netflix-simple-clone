@@ -20,7 +20,8 @@ void Comment::printComment() {
 ostream& operator<<(ostream& out, const Comment& c) {
     out << c.id << "." << c.content << endl;
     for (int i = 0; i < c.replies.size(); i++) {
-        cout << c.id << "." << i + 1 << "." 
+        out << c.id << "." << i + 1 << "." 
             << c.replies[i] << endl;
     }
+    return out;
 }
