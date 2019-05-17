@@ -59,3 +59,11 @@ ostream& operator<<(ostream& out, User& user) {
         << " | " << user.email;
     return out;
 }
+
+void User::showPurchasedFilms(SearchFilmsArgs& args) {
+    cout << GET_FILMS_HEADER << endl;
+    for (int i = 0; i < boughtFilms.size(); i++) {
+        if (boughtFilms[i]->isInFilter(args))
+            cout << boughtFilms[i] << endl;
+    }
+}

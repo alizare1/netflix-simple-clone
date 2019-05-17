@@ -20,6 +20,7 @@ public:
     void showNotifs(int limit);
     void showNewNotifs();
     std::string getName();
+    void showPurchasedFilms(SearchFilmsArgs& args);
     friend std::ostream& operator<<(std::ostream& out, User& user);
 
 protected:
