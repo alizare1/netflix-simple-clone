@@ -196,3 +196,11 @@ void Network::calculatePublisherCut(Film* film) {
         PubsCut = 9.5/10 * film->getPrice();
     publishersMoney[film->getPublisher()->getId()] += PubsCut;
 }
+
+void Network::rateFilm(RateArgs& args) {
+    if (!isLoggedIn())
+        throw PermissionDenied();
+    if (!films.count(args.filmId))
+        throw NotFound();
+    films[args.filmId]->rate(args.score, currUser->getId());
+}
