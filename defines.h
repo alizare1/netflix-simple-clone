@@ -59,6 +59,17 @@
 #define LIST_OF_FOLLOWERS "List of Followers"
 #define FOLLOWERS_LIST_HEADER "#. User Id  | User Username | User Email"
 #define GET_FILMS_HEADER "#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director"
+
+#define SHOW_DETAILS_OF_FILM "Details of Film "
+#define ID "Id = "
+#define DIRECTOR_INFO "Director = "
+#define LENGTH_INFO "Length = "
+#define YEAR_INFO "Year = "
+#define SUMMARY_INFO "Summary = "
+#define RATE_INFO "Rate = "
+#define PRICE_INFO "Price = "
+#define COMMENTS_INFO "Comments"
+
 typedef std::map<std::string, std::string> Args;
 
 #endif

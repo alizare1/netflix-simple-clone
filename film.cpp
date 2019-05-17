@@ -107,3 +107,16 @@ void Film::deleteComment(int cmId) {
     delete comments[cmId - 1];
     comments[cmId - 1] = nullptr;
 }
+
+void Film::showFilmInfo() {
+    cout << SHOW_DETAILS_OF_FILM << name << endl
+        << ID << id << endl << DIRECTOR << director 
+        << endl << LENGTH_INFO << length << endl
+        << YEAR_INFO << year << endl << SUMMARY_INFO
+        << summary << endl << RATE_INFO << getAverageScore()
+        << endl << PRICE_INFO << price << endl;
+    cout << endl << COMMENTS_INFO << endl;
+    for (int i = 0; i < comments.size(); i++)
+        cout << comments[i] << endl;
+    cout << endl;
+}

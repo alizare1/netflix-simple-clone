@@ -24,6 +24,7 @@ public:
     bool isInFilter(SearchFilmsArgs args);
     void editFilm(EditFilmArgs& args);
     void deleteComment(int cmId);
+    void showFilmInfo();
     friend std::ostream& operator<<(std::ostream& out, Film& film);
 
 private:
