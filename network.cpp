@@ -165,3 +165,34 @@ void Network::showFilmInfo(int filmId) {
         cout << endl; 
     }
 }
+
+void Network::buyFilm(int filmId) {
+    if (!isLoggedIn())
+        throw PermissionDenied();
+    if (!films.count(filmId))
+        throw NotFound();
+    currUser->buyFilm(films[filmId]);
+    sendBuyNotif(films[filmId]);
+    calculatePublisherCut(films[filmId]);
+}
+
+void Network::sendBuyNotif(Film* film) {
+    film->getPublisher()->addNotif (
+            USER_NOTIF + currUser->getName() 
+            + WITH_ID + to_string(currUser->getId()) + BUY_YOUR_FILM
+            + film->getName() + WITH_ID + 
+            to_string(film->getId()) + "."
+        );
+}
+
+void Network::calculatePublisherCut(Film* film) {
+    float score = film->getAverageScore();
+    int PubsCut;
+    if (score < 5)
+        PubsCut = 8.0/10 * film->getPrice();
+    else if (score < 8)
+        PubsCut = 9.0/10 * film->getPrice();
+    else 
+        PubsCut = 9.5/10 * film->getPrice();
+    publishersMoney[film->getPublisher()->getId()] += PubsCut;
+}

@@ -44,6 +44,8 @@ private:
     void checkFilmOwnership(int filmId);
     bool isPublisherLoggedIn();
     bool isLoggedIn();
+    void sendBuyNotif(Film* film);
+    void calculatePublisherCut(Film* film);
 
     User* currUser;
     Publisher* currPub;
@@ -53,7 +55,7 @@ private:
     std::map<int, Publisher*> publishers;
     std::map<int, int> publishersMoney;
     std::array<Film*, 4> top4;
-    
+
 };
 
 
