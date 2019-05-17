@@ -16,24 +16,24 @@ class Film;
 
 class Network {
 public:
-    void signup(SignupArgs args);
-    void login(LoginArgs args);
-    void addNewFilm(NewFilmArgs args);
-    void editFilm(EditFilmArgs args);
+    void signup(SignupArgs& args);
+    void login(LoginArgs& args);
+    void addNewFilm(NewFilmArgs& args);
+    void editFilm(EditFilmArgs& args);
     void deleteFilm(int filmId);
-    void deleteComment(DeleteCommentArgs args);
+    void deleteComment(DeleteCommentArgs& args);
     void showFollowers();
     void withdrawMoney();
     void addMoney(int amount);
-    void getPublishedFilms(SearchFilmsArgs args);
-    void replyToComment(ReplyArgs args);
+    void getPublishedFilms(SearchFilmsArgs& args);
+    void replyToComment(ReplyArgs& args);
     void follow(int pubId);
-    void searchFilms(SearchFilmsArgs args);
+    void searchFilms(SearchFilmsArgs& args);
     void showFilmInfo(int filmId);
     void buyFilm(int filmId);
-    void rateFilm(RateArgs args);
-    void commentOnFilm(CommentArgs args);
-    void showPurchasedFilms(SearchFilmsArgs args);
+    void rateFilm(RateArgs& args);
+    void commentOnFilm(CommentArgs& args);
+    void showPurchasedFilms(SearchFilmsArgs& args);
     void showNewNotifs();
     void showNotifs(int limit);
 

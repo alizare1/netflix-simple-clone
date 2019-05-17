@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void Network::signup(SignupArgs args) {
+void Network::signup(SignupArgs& args) {
     if (isNameTaken(args.username))
         throw BadRequest();
     User* newUser;
