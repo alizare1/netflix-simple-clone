@@ -74,3 +74,8 @@ void Network::checkFilmOwnership(int filmId) {
     if(films[filmId]->getPublisher() != currPub)
         throw PermissionDenied();
 }
+
+void Network::deleteComment(DeleteCommentArgs& args) {
+    checkFilmOwnership(args.filmId);
+    films[args.filmId]->deleteComment(args.commentId);
+}
