@@ -53,7 +53,7 @@ private:
     std::map<int, Publisher*> publishers;
     std::map<int, int> publishersMoney;
     std::array<Film*, 4> top4;
-
+    
 };
 
 

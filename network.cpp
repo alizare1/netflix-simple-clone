@@ -134,3 +134,17 @@ void Network::commentOnFilm(CommentArgs& args) {
     films[args.filmId]->comment(args.content, currUser);
 }
 
+void Network::searchFilms(SearchFilmsArgs& args) {
+    std::map<int, Film*>::iterator it = films.begin();
+    while (it != films.end()) {
+        if (it->second->isInFilter(args))
+            cout << it->second << endl;
+        it++;
+    }
+}
+
+void Network::showPurchasedFilms(SearchFilmsArgs& args) {
+    if (!isLoggedIn())
+        throw PermissionDenied();
+    currUser->showPurchasedFilms(args);
+}
