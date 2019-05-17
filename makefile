@@ -2,8 +2,8 @@ CC = g++ -std=c++11
 
 all: phase1.out
 
-phase1.out: main.o commandInterface.o post.o get.o delete.o put.o request.o exceptions.o
-	$(CC) main.o commandInterface.o post.o get.o delete.o put.o request.o exceptions.o -o phase1.out
+phase1.out: main.o commandInterface.o film.o comment.o network.o publisher.o user.o post.o get.o delete.o put.o request.o exceptions.o
+	$(CC) main.o commandInterface.o film.o comment.o network.o publisher.o user.o post.o get.o delete.o put.o request.o exceptions.o -o phase1.out
 
 main.o: main.cpp commandInterface.h
 	$(CC) -c main.cpp
@@ -28,6 +28,21 @@ get.o: get.h get.cpp request.h
 
 exceptions.o: exceptions.h
 	$(CC) -c exceptions.cpp
+
+film.o: exceptions.h publisher.h comment.h structs.h film.h film.cpp
+	$(CC) -c film.cpp
+
+network.o: network.h network.cpp film.h user.o publisher.h structs.h defines.h exceptions.h
+	$(CC) -c network.cpp
+
+publisher.o: publisher.cpp publisher.h user.h film.h structs.h defines.h
+	$(CC) -c publisher.cpp
+
+user.o: user.cpp user.h film.h structs.h
+	$(CC) -c user.cpp
+
+comment.o: comment.cpp comment.h user.h film.h
+	$(CC) -c comment.cpp
 
 .PHONY: clean
 
