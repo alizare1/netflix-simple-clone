@@ -42,7 +42,7 @@ void Network::login(LoginArgs& args) {
 }
 
 void Network::addNewFilm(NewFilmArgs& args) {
-    if (currPub == nullptr)
+    if (!isPublisherLoggedIn())
         throw PermissionDenied();
     Film* newFilm = new Film(args, films.size() + 1, currPub);
     films[newFilm->getId()] = newFilm;
@@ -67,7 +67,7 @@ void Network::deleteFilm(int filmId) {
 }
 
 void Network::checkFilmOwnership(int filmId) {
-    if (currPub == nullptr)
+    if (!isPublisherLoggedIn())
         throw PermissionDenied();
     if (!films.count(filmId))
         throw NotFound();
@@ -78,4 +78,8 @@ void Network::checkFilmOwnership(int filmId) {
 void Network::deleteComment(DeleteCommentArgs& args) {
     checkFilmOwnership(args.filmId);
     films[args.filmId]->deleteComment(args.commentId);
+}
+
+bool Network::isPublisherLoggedIn(){
+    return currPub != nullptr;
 }
