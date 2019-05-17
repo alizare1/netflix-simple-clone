@@ -83,3 +83,18 @@ ostream& operator<<(ostream& out, Film& film) {
         << " | " << film.director;
     return out;
 }
+
+void Film::editFilm(EditFilmArgs& args) {
+    if (args.director != "")
+        director = args.director;
+    if (args.name != "")
+        name = args.name;
+    if (args.summary != "")
+        summary = args.summary;
+    if (args.year != NOT_STATED) 
+        year = args.year;
+    if (args.price != NOT_STATED)
+        price = args.price;
+    if (args.length != NOT_STATED)
+        length = args.length;
+}

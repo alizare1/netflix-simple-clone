@@ -22,6 +22,7 @@ public:
     void replyToComment(ReplyArgs reply);
     Publisher* getPublisher();
     bool isInFilter(SearchFilmsArgs args);
+    void editFilm(EditFilmArgs& args);
     friend std::ostream& operator<<(std::ostream& out, Film& film);
 
 private:

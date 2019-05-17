@@ -43,7 +43,7 @@ void Network::login(LoginArgs& args) {
 
 void Network::addNewFilm(NewFilmArgs& args) {
     if (currPub == nullptr)
-        throw BadRequest();
+        throw PermissionDenied();
     Film* newFilm = new Film(args, films.size() + 1, currPub);
     films[newFilm->getId()] = newFilm;
     currPub->addNewFilm(newFilm);
@@ -53,4 +53,14 @@ void Network::addNewFilm(NewFilmArgs& args) {
             break;
         }
     }
+}
+
+void Network::editFilm(EditFilmArgs& args) {
+    if (currPub == nullptr)
+        throw PermissionDenied();
+    if (!films.count(args.filmId))
+        throw NotFound();
+    if(films[args.filmId]->getPublisher() != currPub)
+        throw PermissionDenied();
+    films[args.filmId]->editFilm(args);
 }
