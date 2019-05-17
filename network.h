@@ -40,6 +40,8 @@ public:
 
 
 private:
+    bool isNameTaken(std::string& name);
+
     User* currUser;
     Publisher* currPub;
     std::map<int, Film*> films;
@@ -47,7 +49,7 @@ private:
     std::map<int, int> publishersMoney;
     std::map<int, Publisher*> publishers;
     std::array<Film*, 4> top4;
-
+    std::vector<std::string> takenNames;
 
 };
 
