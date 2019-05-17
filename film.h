@@ -14,7 +14,7 @@ class Comment;
 
 class Film {
 public:
-    Film(NewFilmArgs args, int _id);
+    Film(NewFilmArgs& args, int _id, Publisher* pub);
     void rate(int score, int userId);
     float getAverageScore();
     void comment(std::string text, User* user);

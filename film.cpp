@@ -2,7 +2,8 @@
 
 using namespace std;
 
-Film::Film(NewFilmArgs args, int _id) {
+Film::Film(NewFilmArgs& args, int _id, Publisher* pub) {
+    publisher = pub;
     director = args.director;
     year = args.year;
     summary = args.summary;
