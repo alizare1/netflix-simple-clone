@@ -67,3 +67,10 @@ void User::showPurchasedFilms(SearchFilmsArgs& args) {
             cout << boughtFilms[i] << endl;
     }
 }
+
+void User::buyFilm(Film* film) {
+    if (film->getPrice() > money)
+        throw PermissionDenied();
+    money -= film->getPrice();
+    boughtFilms.push_back(film);
+}

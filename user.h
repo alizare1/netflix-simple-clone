@@ -21,6 +21,7 @@ public:
     void showNewNotifs();
     std::string getName();
     void showPurchasedFilms(SearchFilmsArgs& args);
+    void buyFilm(Film* film);
     friend std::ostream& operator<<(std::ostream& out, User& user);
 
 protected:
