@@ -43,6 +43,7 @@ public:
 private:
     void checkFilmOwnership(int filmId);
     bool isPublisherLoggedIn();
+    bool isLoggedIn();
 
     User* currUser;
     Publisher* currPub;

@@ -91,7 +91,7 @@ void Network::showFollowers() {
 }
 
 void Network::follow(int PubId) {
-    if (currUser == nullptr)
+    if (!isLoggedIn())
         throw PermissionDenied();
     if (!publishers.count(PubId))
         throw NotFound();
@@ -99,7 +99,7 @@ void Network::follow(int PubId) {
 }
 
 void Network::addMoney(int amount) {
-    if (currUser == nullptr)
+    if (!isLoggedIn())
         throw PermissionDenied();
     currUser->addMoney(amount);
 }
@@ -109,4 +109,8 @@ void Network::withdrawMoney() {
         throw PermissionDenied();
     currPub->addMoney(publishersMoney[currPub->getId()]);
     publishersMoney[currPub->getId()] = 0;
+}
+
+bool Network::isLoggedIn() {
+    return currUser != nullptr;
 }
