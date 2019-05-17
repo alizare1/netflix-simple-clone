@@ -11,6 +11,7 @@
 #include "structs.h"
 #include "defines.h"
 #include "exceptions.h"
+#include <algorithm>
 
 class Film;
 
@@ -46,18 +47,18 @@ private:
     bool isLoggedIn();
     void sendNotif(Film* film, std::string action);
     void calculatePublisherCut(Film* film);
-    void updateTop4(Film* film);
-    void insertTop4(Film* film, int index);
+    void showRecomms();
+    void inserFilmByScore(Film* film);
 
     int netWorkMoney;
     User* currUser;
     Publisher* currPub;
     std::map<int, Film*> films;
+    std::vector<Film*> filmsByScore;
     std::map<int, User*> usersById;
     std::map<std::string, User*> usersByName;
     std::map<int, Publisher*> publishers;
     std::map<int, int> publishersMoney;
-    std::array<Film*, 4> top4;
 
 };
 

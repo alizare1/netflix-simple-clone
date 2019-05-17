@@ -74,3 +74,11 @@ void User::buyFilm(Film* film) {
     money -= film->getPrice();
     boughtFilms.push_back(film);
 }
+
+bool User::hasFilm(Film* film) {
+    for (int i = 0; i < boughtFilms.size(); i++) {
+        if (boughtFilms[i] == film)
+            return true;
+    }
+    return false;
+}

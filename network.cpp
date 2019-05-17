@@ -3,7 +3,6 @@
 using namespace std;
 
 Network::Network() {
-    top4 = {nullptr};
     currUser = nullptr;
     currPub = nullptr;
     netWorkMoney = 0;
@@ -48,12 +47,7 @@ void Network::addNewFilm(NewFilmArgs& args) {
     Film* newFilm = new Film(args, films.size() + 1, currPub);
     films[newFilm->getId()] = newFilm;
     currPub->addNewFilm(newFilm);
-    for (int i = 0; i < 4; i++) {
-        if (top4[i] == nullptr) {
-            top4[i] = newFilm;
-            break;
-        }
-    }
+    filmsByScore.push_back(newFilm);
 }
 
 void Network::editFilm(EditFilmArgs& args) {
@@ -159,14 +153,31 @@ void Network::showFilmInfo(int filmId) {
     if (!films.count(filmId)) 
         throw NotFound();
     films[filmId]->showFilmInfo();
-    cout << RECOMMS_INFO << endl;
-    for (int i = 0; i < 4; i++) {
-        if (top4[i] == nullptr)
-            break;
-        cout << RECOMMS_HEADER << endl
-            << i + 1 << ". ";
-        top4[i]->showAsRecom();
-        cout << endl; 
+    showRecomms();
+}
+
+void Network::showRecomms() {
+    cout << RECOMMS_INFO << endl << RECOMMS_HEADER << endl;
+    int count = 0;
+    for (int i = 0; i < filmsByScore.size(); i++) {
+        if (!currUser->hasFilm(filmsByScore[i])) {
+            cout << i + 1 << ". ";
+            filmsByScore[i]->showAsRecom();
+            cout << endl;
+            count++;
+        }
+        if (count == 4)
+            return;
+    }
+}
+
+void Network::inserFilmByScore(Film* film) {
+    for (int i = 0; filmsByScore[i] != film; i++) {
+        if (film->getAverageScore() > filmsByScore[i]->getAverageScore()) {
+            filmsByScore.erase(find(filmsByScore.begin(), filmsByScore.end(), film));
+            filmsByScore.insert(filmsByScore.begin() + i, film);
+            return;
+        }
     }
 }
 
@@ -209,24 +220,5 @@ void Network::rateFilm(RateArgs& args) {
         throw NotFound();
     films[args.filmId]->rate(args.score, currUser->getId());
     sendNotif(films[args.filmId], RATE_YOUR_FILM);
-}
-
-void Network::updateTop4(Film* film) {
-    int score = film->getAverageScore();
-    for (int i = 0; i < 4; i++) {
-        if (top4[i] != nullptr) {
-            if (score > top4[i]->getAverageScore()) {
-                insertTop4(film, i);
-                break;
-            }
-        }
-    }
-}
-
-void Network::insertTop4(Film* film, int index) {
-    for (int i = 3 ; i > index; i++) {
-        top4[i] = top4[i - 1];        
-    }
-    top4[index] = film;
 }
 

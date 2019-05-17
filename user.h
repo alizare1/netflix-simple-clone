@@ -22,6 +22,7 @@ public:
     std::string getName();
     void showPurchasedFilms(SearchFilmsArgs& args);
     void buyFilm(Film* film);
+    bool hasFilm(Film* film);
     friend std::ostream& operator<<(std::ostream& out, User& user);
 
 protected:
