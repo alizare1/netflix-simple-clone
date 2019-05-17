@@ -13,6 +13,10 @@ Film::Film(NewFilmArgs& args, int _id, Publisher* pub) {
     id = _id;
 }
 
+int Film::getId() {
+    return id;
+}
+
 void Film::rate(int score, int userId) {
     if (score < 0 || score > 10)
         throw BadRequest();
