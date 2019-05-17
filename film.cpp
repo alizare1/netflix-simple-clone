@@ -98,3 +98,12 @@ void Film::editFilm(EditFilmArgs& args) {
     if (args.length != NOT_STATED)
         length = args.length;
 }
+
+void Film::deleteComment(int cmId) {
+    if (cmId > comments.size())
+        throw NotFound();
+    if (comments[cmId] == nullptr)
+        throw NotFound();
+    delete comments[cmId - 1];
+    comments[cmId - 1] = nullptr;
+}
