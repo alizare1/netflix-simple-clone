@@ -9,6 +9,7 @@
 #include "film.h"
 
 class User;
+class Film;
 
 class Comment {
 public:

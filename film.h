@@ -9,6 +9,8 @@
 #include "comment.h"
 #include "structs.h"
 
+class Publisher;
+
 class Film {
 public:
     Film(NewFilmArgs args, int _id);
