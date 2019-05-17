@@ -56,6 +56,9 @@
 #define RATE_YOUR_FILM " rate your film "
 #define COMMENT_ON_FILM " comment on your film "
 
+#define LIST_OF_FOLLOWERS "List of Followers"
+#define FOLLOWERS_LIST_HEADER "#. User Id  | User Username | User Email"
+#define GET_FILMS_HEADER "#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director"
 typedef std::map<std::string, std::string> Args;
 
 #endif
