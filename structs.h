@@ -16,7 +16,7 @@ struct SignupArgs {
     std::string username;
     std::string password;
     int age;
-    std::string publisher; 
+    bool publisher; 
 };
 
 struct LoginArgs {

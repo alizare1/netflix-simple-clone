@@ -87,13 +87,16 @@ SignupArgs Post::getSignupArgs(Args& args) {
             signupArgs.email = args.at(EMAIL) : throw BadRequest();
         isNumber(args.at(AGE)) ?
             signupArgs.age = stoi(args.at(AGE)) : throw BadRequest();
-        if (mapHasKey(args, PUBLISHER))
-            if (args.at(PUBLISHER) == TRUE || args.at(PUBLISHER) == FALSE)
-                signupArgs.publisher = args.at(PUBLISHER);
+        if (mapHasKey(args, PUBLISHER)) {
+            if (args.at(PUBLISHER) == TRUE)
+                signupArgs.publisher = true;
+            else if(args.at(PUBLISHER) == FALSE)
+                signupArgs.publisher = false;
             else 
                 throw BadRequest();
+        }
         else 
-            signupArgs.publisher = FALSE;
+            signupArgs.publisher = false;
     }
     catch (exception& e) {
         throw BadRequest();
