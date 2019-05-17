@@ -36,4 +36,8 @@ void Publisher::addFollower(User* user) {
             return;
     }
     followers.push_back(user);
+    newNotifications.push_back(
+        USER_NOTIF + user->getName() + 
+        WITH_ID + to_string(user->getId()) + FOLLOW_YOU
+    );
 }
