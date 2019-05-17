@@ -114,3 +114,9 @@ void Network::withdrawMoney() {
 bool Network::isLoggedIn() {
     return currUser != nullptr;
 }
+
+void Network::getPublishedFilms(SearchFilmsArgs& args) {
+    if (!isPublisherLoggedIn())
+        throw PermissionDenied();
+    currPub->showFilms(args);
+}
