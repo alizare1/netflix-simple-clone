@@ -83,3 +83,17 @@ void Network::deleteComment(DeleteCommentArgs& args) {
 bool Network::isPublisherLoggedIn(){
     return currPub != nullptr;
 }
+
+void Network::showFollowers() {
+    if (!isPublisherLoggedIn())
+        throw PermissionDenied();
+    currPub->showFollowers();
+}
+
+void Network::follow(int PubId) {
+    if (currUser == nullptr)
+        throw PermissionDenied();
+    if (!publishers.count(PubId))
+        throw NotFound();
+    publishers[PubId]->addFollower(currUser);
+}
