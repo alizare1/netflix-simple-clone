@@ -8,7 +8,7 @@ Publisher::Publisher(SignupArgs args, int _id)
 void Publisher::addNewFilm(Film* film) {
     producedFilms.push_back(film);
     for (int i = 0; i < followers.size(); i++) {
-        followers[i]->addNotif(PUBLISHER + ' ' + username + 
+        followers[i]->addNotif(PUBLISHE_NOTIF + username + 
             WITH_ID + to_string(id) + REGISTER_NEW_FILM);
     }
 }

@@ -11,7 +11,7 @@ Comment::Comment(string _content, User* _commenter, int _id, Film* _film) {
 
 void Comment::addReply(string reply) {
     replies.push_back(reply);
-    commenter->addNotif(PUBLISHER + ' ' + film->getPublisher()->getName()
+    commenter->addNotif(PUBLISHE_NOTIF + film->getPublisher()->getName()
         + WITH_ID + to_string(film->getPublisher()->getId()) + REPLY_TO_COMMENT);
 }
 

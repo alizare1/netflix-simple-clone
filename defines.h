@@ -55,6 +55,8 @@
 #define BUY_YOUR_FILM " buy your film "
 #define RATE_YOUR_FILM " rate your film "
 #define COMMENT_ON_FILM " comment on your film "
+#define USER_NOTIF "User "
+#define PUBLISHE_NOTIF "Publishe "
 
 #define LIST_OF_FOLLOWERS "List of Followers"
 #define FOLLOWERS_LIST_HEADER "#. User Id  | User Username | User Email"
