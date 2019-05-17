@@ -3,7 +3,7 @@
 using namespace std;
 
 void Network::signup(SignupArgs& args) {
-    if (isNameTaken(args.username))
+    if (usersByName.count(args.username))
         throw BadRequest();
     User* newUser;
     if (args.publisher) {
@@ -13,15 +13,9 @@ void Network::signup(SignupArgs& args) {
         currPub = newPub;
     }
     else
-        newUser = new User(args, users.size() + 1);
-    users[newUser->getId()] = newUser;
+        newUser = new User(args, usersById.size() + 1);
+    usersById[newUser->getId()] = newUser;
+    usersByName[args.username] = newUser;
     currUser = newUser;
 }
 
-bool Network::isNameTaken(string& name) {
-    for (int i = 0; i < takenNames.size(); i++) {
-        if (name == takenNames[i])
-            return true;
-    }
-    return false;
-}
