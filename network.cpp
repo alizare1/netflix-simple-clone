@@ -124,7 +124,7 @@ void Network::replyToComment(ReplyArgs& args) {
 }
 
 void Network::commentOnFilm(CommentArgs& args) {
-    if (isLoggedIn())
+    if (!isLoggedIn())
         throw PermissionDenied();
     if (!films.count(args.filmId))
         throw NotFound();
