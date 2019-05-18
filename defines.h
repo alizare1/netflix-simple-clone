@@ -63,7 +63,7 @@
 #define PUBLISHE_NOTIF "Publisher "
 
 #define LIST_OF_FOLLOWERS "List of Followers"
-#define FOLLOWERS_LIST_HEADER "#. User Id  | User Username | User Email"
+#define FOLLOWERS_LIST_HEADER "#. User Id | User Username | User Email"
 #define GET_FILMS_HEADER "#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director"
 
 #define SHOW_DETAILS_OF_FILM "Details of Film "
