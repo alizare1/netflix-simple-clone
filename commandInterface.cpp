@@ -59,7 +59,7 @@ StructedInput CommandInterface::getStructedInput(vector<string>& input) {
 }
 
 bool CommandInterface::isReqGood(vector<string>& input) {
-    if (input.size() < 2 || input.size() == 3)
+    if (input.size() < 2)
         return false;
     if (functionMap.find(input[0]) == functionMap.end())
         return false;
