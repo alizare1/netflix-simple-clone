@@ -35,15 +35,17 @@ void User::addNotif(string notif) {
 
 void User::showNotifs(int limit) {
     int lastIndex = notifications.size() - 1;
+    int count = 1;
     for (int i = lastIndex; i > lastIndex - limit && i >= 0; i--) {
-        cout << notifications[i] << endl;
+        cout << count++ << ". " << notifications[i] << endl;
     }
 }
 
 void User::showNewNotifs() {
     int lastIndex = newNotifications.size() - 1;
+    int count = 1;
     for (int i = lastIndex; i >= 0; i--)
-        cout << newNotifications[i] << endl;
+        cout << count++ << ". " << newNotifications[i] << endl;
     for (int i = 0; i <= lastIndex; i++) {
         notifications.push_back(newNotifications[i]);
         newNotifications.erase(newNotifications.begin() + i);
