@@ -28,10 +28,13 @@ public:
     void deleteComment(int cmId);
     void showFilmInfo();
     void showAsRecom();
+    void deleteFilm();
+    bool isDeleted();
     friend std::ostream& operator<<(std::ostream& out, Film& film);
 
 private:
 
+    bool deleted;
     std::string name;
     std::string summary;
     std::string director;

@@ -11,6 +11,7 @@ Film::Film(NewFilmArgs& args, int _id, Publisher* pub) {
     length = args.length;
     price = args.price;
     id = _id;
+    deleted = false;
 }
 
 int Film::getId() {
@@ -133,4 +134,12 @@ int Film::getPrice() {
 
 std::string Film::getName() {
     return name;
+}
+
+void Film::deleteFilm() {
+    deleted = true;
+}
+
+bool Film::isDeleted() {
+    return deleted;
 }

@@ -25,6 +25,8 @@ void Publisher::showFilms(SearchFilmsArgs args) {
     cout << GET_FILMS_HEADER << endl;
     int num = 1;
     for (int i = 0; i < producedFilms.size(); i++) {
+        if (producedFilms[i]->isDeleted())
+            continue;
         if (producedFilms[i]->isInFilter(args))
             cout << num++ << ". " << *(producedFilms[i]) << endl;
     }
