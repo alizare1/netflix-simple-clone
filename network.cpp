@@ -126,6 +126,8 @@ void Network::commentOnFilm(CommentArgs& args) {
         throw PermissionDenied();
     if (!films.count(args.filmId))
         throw NotFound();
+    if (!currUser->hasFilm(films[args.filmId]))
+        throw PermissionDenied();
     films[args.filmId]->comment(args.content, currUser);
     sendNotif(films[args.filmId], COMMENT_ON_FILM);
 }
@@ -135,6 +137,10 @@ void Network::searchFilms(SearchFilmsArgs& args) {
     std::map<int, Film*>::iterator it = films.begin();
     int counter = 1;
     while (it != films.end()) {
+        if (it->first< 0) {
+            it++;
+            continue;
+        }
         if (it->second->isInFilter(args))
             cout << counter++ << ". " << *(it->second) << endl;
         it++;
@@ -218,6 +224,8 @@ void Network::rateFilm(RateArgs& args) {
         throw PermissionDenied();
     if (!films.count(args.filmId))
         throw NotFound();
+    if (!currUser->hasFilm(films[args.filmId]))
+        throw PermissionDenied();
     films[args.filmId]->rate(args.score, currUser->getId());
     sendNotif(films[args.filmId], RATE_YOUR_FILM);
 }
