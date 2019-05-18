@@ -62,9 +62,10 @@ ostream& operator<<(ostream& out, User& user) {
 
 void User::showPurchasedFilms(SearchFilmsArgs& args) {
     cout << GET_FILMS_HEADER << endl;
+    int count = 1;
     for (int i = 0; i < boughtFilms.size(); i++) {
         if (boughtFilms[i]->isInFilter(args))
-            cout << *(boughtFilms[i]) << endl;
+            cout << count++ << ". " << *(boughtFilms[i]) << endl;
     }
 }
 
