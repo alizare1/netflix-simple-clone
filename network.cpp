@@ -58,6 +58,8 @@ void Network::editFilm(EditFilmArgs& args) {
 void Network::deleteFilm(int filmId) {
     checkFilmOwnership(filmId);
     films[-filmId] = films[filmId];
+    filmsByScore.erase(find(filmsByScore.begin(), 
+        filmsByScore.end(), films[filmId]));
     films.erase(filmId);
 }
 
