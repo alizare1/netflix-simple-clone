@@ -17,7 +17,7 @@ void Publisher::showFollowers() {
     cout << LIST_OF_FOLLOWERS << endl 
     <<  FOLLOWERS_LIST_HEADER << endl;
     for (int i = 0; i < followers.size(); i++) {
-        cout << i + 1 << "." << followers[i] << endl;
+        cout << i + 1 << ". " << *followers[i] << endl;
     }
 }
 
