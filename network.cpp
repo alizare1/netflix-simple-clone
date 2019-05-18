@@ -161,19 +161,20 @@ void Network::showFilmInfo(int filmId) {
     if (!films.count(filmId)) 
         throw NotFound();
     films[filmId]->showFilmInfo();
-    showRecomms();
+    showRecomms(films[filmId]);
 }
 
-void Network::showRecomms() {
+void Network::showRecomms(Film* currFilm) {
     cout << RECOMMS_INFO << endl << RECOMMS_HEADER << endl;
     int count = 0;
     for (int i = 0; i < filmsByScore.size(); i++) {
-        if (!currUser->hasFilm(filmsByScore[i])) {
-            cout << i + 1 << ". ";
-            filmsByScore[i]->showAsRecom();
-            cout << endl;
-            count++;
-        }
+        if (filmsByScore[i] == currFilm)
+            continue;
+        if (currUser->hasFilm(filmsByScore[i])) 
+            continue;
+        cout << ++count << ". ";
+        filmsByScore[i]->showAsRecom();
+        cout << endl;
         if (count == 4)
             return;
     }

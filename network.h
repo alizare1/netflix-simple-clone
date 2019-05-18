@@ -47,7 +47,7 @@ private:
     bool isLoggedIn();
     void sendNotif(Film* film, std::string action);
     void calculatePublisherCut(Film* film);
-    void showRecomms();
+    void showRecomms(Film* currFilm);
     void inserFilmByScore(Film* film);
 
     int netWorkMoney;
