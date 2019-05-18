@@ -34,6 +34,7 @@ void User::addNotif(string notif) {
 }
 
 void User::showNotifs(int limit) {
+    cout << NOTIF_HEADER << endl;
     int lastIndex = notifications.size() - 1;
     int count = 1;
     for (int i = lastIndex; i > lastIndex - limit && i >= 0; i--) {
@@ -42,6 +43,7 @@ void User::showNotifs(int limit) {
 }
 
 void User::showNewNotifs() {
+    cout << NOTIF_HEADER << endl;
     int lastIndex = newNotifications.size() - 1;
     int count = 1;
     for (int i = lastIndex; i >= 0; i--)
