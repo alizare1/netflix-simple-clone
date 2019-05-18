@@ -21,6 +21,8 @@ void CommandInterface::run() {
     StructedInput structedInput;
     while (getline(cin, line)) {
         input = tokenize(line);
+        if (input.size() == 0)
+            continue;
         try {
             structedInput = getStructedInput(input);
             functionMap[structedInput.method](structedInput);
