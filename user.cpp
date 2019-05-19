@@ -77,6 +77,12 @@ void User::buyFilm(Film* film) {
     if (film->getPrice() > money)
         throw PermissionDenied();
     money -= film->getPrice();
+    for (int i = 0; i < boughtFilms.size(); i++) {
+        if (film->getId() < boughtFilms[i]->getId()) {
+            boughtFilms.insert(boughtFilms.begin() + i, film);
+            return;
+        }
+    }
     boughtFilms.push_back(film);
 }
 
