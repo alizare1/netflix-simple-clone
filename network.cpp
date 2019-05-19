@@ -196,6 +196,8 @@ void Network::buyFilm(int filmId) {
         throw PermissionDenied();
     if (!films.count(filmId))
         throw NotFound();
+    if (currUser->hasFilm(films[filmId]))
+        return;
     currUser->buyFilm(films[filmId]);
     sendNotif(films[filmId], BUY_YOUR_FILM);
     calculatePublisherCut(films[filmId]);
