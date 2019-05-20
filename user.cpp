@@ -9,6 +9,7 @@ User::User(SignupArgs args, int _id) {
     age = args.age;
     id = _id;
     isPub = args.publisher;
+    money = 0;
 }
 
 bool User::checkPassword(string pw) {
