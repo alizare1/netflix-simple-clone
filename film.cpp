@@ -119,9 +119,15 @@ void Film::showFilmInfo() {
         << summary << endl << RATE_INFO << getAverageScore()
         << endl << PRICE_INFO << price << endl;
     cout << endl << COMMENTS_INFO << endl;
-    for (int i = 0; i < comments.size(); i++)
-        if (comments[i] != nullptr)
-            cout << *comments[i] << endl;
+    bool noComments = false;
+    for (int i = 0; i < comments.size(); i++) {
+        if (comments[i] != nullptr) {
+            cout << *comments[i] << endl; 
+            noComments = true;
+        }
+    }
+    if (!noComments)
+        cout << endl;
 }
 
 void Film::showAsRecom() {
