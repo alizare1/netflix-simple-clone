@@ -9,7 +9,7 @@ void Request::parseInput(StructedInput& structedInput) {
     else 
         throw NotFound();
     if (structedInput.method != GET_STR)
-        std::cout << "OK" << std::endl;
+        std::cout << OK << std::endl;
 }
 
 bool Request::isNumber(std::string str) {

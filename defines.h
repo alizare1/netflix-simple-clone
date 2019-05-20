@@ -85,6 +85,8 @@
 #define AVERAGE_SCORE_RATIO 0.9
 #define HIGH_SCORE_RATIO 0.95
 
+#define OK "OK"
+
 typedef std::map<std::string, std::string> Args;
 
 #endif
