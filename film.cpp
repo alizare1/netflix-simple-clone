@@ -120,8 +120,7 @@ void Film::showFilmInfo() {
         << endl << PRICE_INFO << price << endl;
     cout << endl << COMMENTS_INFO << endl;
     for (int i = 0; i < comments.size(); i++)
-        cout << comments[i] << endl;
-    cout << endl;
+        cout << *comments[i] << endl;
 }
 
 void Film::showAsRecom() {
