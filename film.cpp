@@ -105,7 +105,7 @@ void Film::editFilm(EditFilmArgs& args) {
 void Film::deleteComment(int cmId) {
     if (cmId > comments.size() || cmId < 1)
         throw NotFound();
-    if (comments[cmId] == nullptr)
+    if (comments[cmId - 1] == nullptr)
         throw NotFound();
     delete comments[cmId - 1];
     comments[cmId - 1] = nullptr;
