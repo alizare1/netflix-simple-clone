@@ -136,6 +136,8 @@ void Network::commentOnFilm(CommentArgs& args) {
 }
 
 void Network::searchFilms(SearchFilmsArgs& args) {
+    if (!isLoggedIn())
+        throw PermissionDenied();
     cout << GET_FILMS_HEADER << endl;
     std::map<int, Film*>::iterator it = films.begin();
     int counter = 1;
