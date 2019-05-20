@@ -103,7 +103,7 @@ void Film::editFilm(EditFilmArgs& args) {
 }
 
 void Film::deleteComment(int cmId) {
-    if (cmId > comments.size())
+    if (cmId > comments.size() || cmId < 1)
         throw NotFound();
     if (comments[cmId] == nullptr)
         throw NotFound();
@@ -120,7 +120,8 @@ void Film::showFilmInfo() {
         << endl << PRICE_INFO << price << endl;
     cout << endl << COMMENTS_INFO << endl;
     for (int i = 0; i < comments.size(); i++)
-        cout << *comments[i] << endl;
+        if (comments[i] != nullptr)
+            cout << *comments[i] << endl;
 }
 
 void Film::showAsRecom() {
