@@ -3,6 +3,8 @@
 
 
 int main() {
-    CommandInterface cm(new Network);
+    Network* network = new Network();
+    CommandInterface cm(network);
     cm.run();
+    delete network;
 }
