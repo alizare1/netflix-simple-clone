@@ -8,6 +8,15 @@ Network::Network() {
     netWorkMoney = 0;
 }
 
+Network::~Network() {
+    map<int, Film*>::iterator it;
+    for (it = films.begin(); it != films.end(); it++)
+        delete it->second;
+    map<int, User*>::iterator userIt;
+    for (userIt = usersById.begin(); userIt != usersById.end(); userIt++)
+        delete userIt->second;
+}
+
 void Network::signup(SignupArgs& args) {
     if (usersByName.count(args.username))
         throw BadRequest();

@@ -18,6 +18,7 @@ class Film;
 class Network {
 public:
     Network();
+    ~Network();
     void signup(SignupArgs& args);
     void login(LoginArgs& args);
     void addNewFilm(NewFilmArgs& args);
