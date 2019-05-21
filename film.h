@@ -14,6 +14,7 @@ class Comment;
 
 class Film {
 public:
+    ~Film();
     Film(NewFilmArgs& args, int _id, Publisher* pub);
     int getId();
     int getPrice();

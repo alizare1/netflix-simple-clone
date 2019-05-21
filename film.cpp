@@ -14,6 +14,11 @@ Film::Film(NewFilmArgs& args, int _id, Publisher* pub) {
     deleted = false;
 }
 
+Film::~Film() {
+    for (int i = 0; i < comments.size(); i++)
+        delete comments[i];
+}
+
 int Film::getId() {
     return id;
 }
