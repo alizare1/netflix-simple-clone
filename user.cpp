@@ -94,3 +94,11 @@ bool User::hasFilm(Film* film) {
     }
     return false;
 }
+
+void User::showMoney() {
+    cout << money << endl;
+}
+
+void User::substractMoney(int amount) {
+    money -= amount;
+}

@@ -24,6 +24,8 @@ public:
     void buyFilm(Film* film);
     bool hasFilm(Film* film);
     friend std::ostream& operator<<(std::ostream& out, User& user);
+    void showMoney();
+    void substractMoney(int amount);
 
 protected:
     std::string username;
