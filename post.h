@@ -30,6 +30,12 @@ private:
     CommentArgs getCommentArgs(Args& args);
     std::string hashString(const std::string& str);
     bool isEmailValid(const std::string email);
+    void editFilm(Args& args);
+    EditFilmArgs getFilmArgs(Args& args);
+    void deleteFilm(Args& args);
+    void deleteComment(Args& args);
+    DeleteCommentArgs getDeleteCommentArgs(Args& args);
+    void logout();
 
 };
 

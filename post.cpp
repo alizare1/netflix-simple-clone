@@ -22,6 +22,14 @@ Post::Post(Network* _network)
         [this](Args args){ rateFilm(args); };
     functionMap[COMMENTS] =
         [this](Args args){ commentOnFilm(args); };
+    functionMap[PUT_FILMS] = 
+        [this](Args args){ editFilm(args); };
+    functionMap[DELETE_FILMS] =
+        [this](Args args){ deleteFilm(args); };
+    functionMap[DELETE_COMMENTS] =
+        [this](Args args){ deleteComment(args); };
+    functionMap[LOGOUT] =
+        [this](Args args){ logout(); };
 }
 
 void Post::signup(Args& args) {
@@ -194,4 +202,68 @@ CommentArgs Post::getCommentArgs(Args& args) {
         throw BadRequest();
     }
     return commentArgs;
+}
+
+void Post::editFilm(Args& args) {
+    EditFilmArgs filmArgs = getFilmArgs(args);
+    network->editFilm(filmArgs);
+}
+
+EditFilmArgs Post::getFilmArgs(Args& args) {
+    EditFilmArgs filmArgs;
+    try {
+        isNumber(args.at(FILM_ID)) ?
+            filmArgs.filmId = stoi(args.at(FILM_ID)) : throw BadRequest();
+    }
+    catch(exception& e) {
+        throw BadRequest();
+    }
+    if (mapHasKey(args, NAME)) 
+        filmArgs.name = args[NAME];
+    if (mapHasKey(args, SUMMARY))
+        filmArgs.summary = args[SUMMARY];
+    if (mapHasKey(args, DIRECTOR)) 
+        filmArgs.director = args[DIRECTOR];
+    if (mapHasKey(args, YEAR))
+        isNumber(args.at(YEAR)) ?
+            filmArgs.year = stoi(args.at(YEAR)) : throw BadRequest();
+    if (mapHasKey(args, LENGTH))
+        isNumber(args.at(LENGTH)) ?
+            filmArgs.length = stoi(args.at(LENGTH)) : throw BadRequest();
+    if (mapHasKey(args, PRICE))
+        isNumber(args.at(PRICE)) ?
+            filmArgs.price = stoi(args.at(PRICE)) : throw BadRequest();
+    return filmArgs;
+}
+
+void Post::deleteFilm(Args& args) {
+    if (mapHasKey(args, FILM_ID)) {
+        isNumber(args.at(FILM_ID)) ?
+            network->deleteFilm(stoi(args.at(FILM_ID))) : throw BadRequest();
+    }
+    else
+        throw BadRequest();
+}
+
+void Post::deleteComment(Args& args) {
+    DeleteCommentArgs commentArgs = getDeleteCommentArgs(args);
+    network->deleteComment(commentArgs);
+}
+
+DeleteCommentArgs Post::getDeleteCommentArgs(Args& args) {
+    DeleteCommentArgs commentArgs;
+    try {
+        isNumber(args.at(COMMENT_ID)) ?
+            commentArgs.commentId = stoi(args.at(COMMENT_ID)) : throw BadRequest() ;
+        isNumber(args.at(FILM_ID)) ?
+            commentArgs.filmId = stoi(args.at(FILM_ID)) : throw BadRequest() ;
+    }
+    catch (std::exception& e) {
+        throw BadRequest();
+    }
+    return commentArgs;
+}
+
+void Post::logout() {
+    network->logout();
 }

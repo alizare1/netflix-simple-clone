@@ -16,6 +16,8 @@ Get::Get(Network* _network)
         [this](Args args){ showNewNotifs(); };
     functionMap[NOTIFICATION_READ] =
         [this](Args args){ showNotifs(args); };
+    functionMap[MONEY] =
+        [this](Args args){ showMoney(); };
 }
 
 void Get::getFollowers(Args& args) {
@@ -51,6 +53,10 @@ void Get::showNotifs(Args& args) {
         isNumber(args.at(LIMIT)) ?
             network->showNotifs(stoi(args.at(LIMIT))) : throw BadRequest();
     }
+}
+
+void Get::showMoney() {
+    network->showMoney();
 }
 
 SearchFilmsArgs Get::getSearchArgs(Args& args) {

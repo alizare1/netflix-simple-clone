@@ -4,15 +4,11 @@
 using namespace std;
 
 CommandInterface::CommandInterface(Network* network)
-    :POST(network), GET(network), DELETE(network), PUT(network) {
+    :POST(network), GET(network) {
     functionMap[POST_STR] = 
         [this](StructedInput structedInput){POST.parseInput(structedInput);};
     functionMap[GET_STR] = 
         [this](StructedInput structedInput){GET.parseInput(structedInput);};
-    functionMap[PUT_STR] = 
-        [this](StructedInput structedInput){PUT.parseInput(structedInput);};
-    functionMap[DELETE_STR] = 
-        [this](StructedInput structedInput){DELETE.parseInput(structedInput);};
 }
 
 void CommandInterface::run() {

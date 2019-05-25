@@ -10,8 +10,6 @@
 #include "defines.h"
 #include "post.h"
 #include "get.h"
-#include "put.h"
-#include "delete.h"
 #include "exceptions.h"
 
 class CommandInterface {
@@ -29,9 +27,7 @@ private:
 
     std::map<std::string, std::function<void(StructedInput)>> functionMap;
     Post POST;
-    Delete DELETE;
     Get GET;
-    Put PUT;
 };
 
 

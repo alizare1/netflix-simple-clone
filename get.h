@@ -14,6 +14,7 @@ private:
     void showPurchasedFilms(Args& args);
     void showNewNotifs();
     void showNotifs(Args& args);
+    void showMoney();
     SearchFilmsArgs getSearchArgs(Args& args);
 };
 
