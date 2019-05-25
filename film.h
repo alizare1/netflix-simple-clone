@@ -14,8 +14,8 @@ class Comment;
 
 class Film {
 public:
-    ~Film();
     Film(NewFilmArgs& args, int _id, Publisher* pub);
+    ~Film();
     int getId();
     int getPrice();
     std::string getName();
