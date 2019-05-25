@@ -5,7 +5,7 @@ using namespace std;
 Network::Network() {
     currUser = nullptr;
     currPub = nullptr;
-    netWorkMoney = 0;
+    setAdmin();
 }
 
 Network::~Network() {
@@ -17,7 +17,21 @@ Network::~Network() {
         delete userIt->second;
 }
 
+void* Network::setAdmin() {
+    SignupArgs adminArgs;
+    adminArgs.age = 0;
+    adminArgs.email = ADMIN_MAIL;
+    adminArgs.password = ADMIN_PW;
+    adminArgs.publisher = false;
+    adminArgs.username = ADMIN;
+    admin = new User(adminArgs, 1);
+    usersById[0] = admin;
+    usersByName[ADMIN] = admin;
+}
+
 void Network::signup(SignupArgs& args) {
+    if (isLoggedIn())
+        throw BadRequest();
     if (usersByName.count(args.username))
         throw BadRequest();
     currPub = nullptr;
@@ -37,6 +51,8 @@ void Network::signup(SignupArgs& args) {
 }
 
 void Network::login(LoginArgs& args) {
+    if (isLoggedIn())
+        throw BadRequest();
     if (!usersByName.count(args.username))
         throw BadRequest();
     if (usersByName[args.username]->checkPassword(args.password)) {
@@ -57,6 +73,7 @@ void Network::addNewFilm(NewFilmArgs& args) {
     films[newFilm->getId()] = newFilm;
     currPub->addNewFilm(newFilm);
     filmsByScore.push_back(newFilm);
+    recommender.addFilm(newFilm);
 }
 
 void Network::editFilm(EditFilmArgs& args) {
@@ -70,6 +87,7 @@ void Network::deleteFilm(int filmId) {
     films[-filmId] = films[filmId];
     filmsByScore.erase(find(filmsByScore.begin(), 
         filmsByScore.end(), films[filmId]));
+    recommender.removeFilm(films[filmId]);
     films.erase(filmId);
 }
 
@@ -88,6 +106,7 @@ void Network::deleteComment(DeleteCommentArgs& args) {
 }
 
 bool Network::isPublisherLoggedIn(){
+
     return currPub != nullptr;
 }
 
@@ -115,6 +134,7 @@ void Network::withdrawMoney() {
     if (!isPublisherLoggedIn())
         throw PermissionDenied();
     currPub->addMoney(publishersMoney[currPub->getId()]);
+    admin->substractMoney(publishersMoney[currPub->getId()]);
     publishersMoney[currPub->getId()] = 0;
 }
 
@@ -179,13 +199,14 @@ void Network::showFilmInfo(int filmId) {
 void Network::showRecomms(Film* currFilm) {
     cout << RECOMMS_INFO << endl << RECOMMS_HEADER << endl;
     int count = 0;
-    for (int i = 0; i < filmsByScore.size(); i++) {
-        if (filmsByScore[i] == currFilm)
+    vector<Film*> sortedRecomList = recommender.getSortedRecomList(currFilm);
+    for (int i = 0; i < sortedRecomList.size(); i++) {
+        if (sortedRecomList[i] == currFilm)
             continue;
-        if (currUser->hasFilm(filmsByScore[i])) 
+        if (currUser->hasFilm(sortedRecomList[i])) 
             continue;
         cout << ++count << ". ";
-        filmsByScore[i]->showAsRecom();
+        sortedRecomList[i]->showAsRecom();
         cout << endl;
         if (count == 4)
             return;
@@ -212,6 +233,7 @@ void Network::buyFilm(int filmId) {
     currUser->buyFilm(films[filmId]);
     sendNotif(films[filmId], BUY_YOUR_FILM);
     calculatePublisherCut(films[filmId]);
+    recommender.updateMatrix(films[filmId], currUser);
 }
 
 void Network::sendNotif(Film* film, string action) {
@@ -233,7 +255,7 @@ void Network::calculatePublisherCut(Film* film) {
     else 
         PubsCut = HIGH_SCORE_RATIO * film->getPrice();
     publishersMoney[film->getPublisher()->getId()] += PubsCut;
-    netWorkMoney += film->getPrice() - PubsCut;
+    admin->addMoney(film->getPrice());
 }
 
 void Network::rateFilm(RateArgs& args) {
@@ -257,4 +279,17 @@ void Network::showNotifs(int limit) {
     if (!isLoggedIn())
         throw PermissionDenied();
     currUser->showNotifs(limit);
+}
+
+void Network::showMoney() {
+    if (!isLoggedIn())
+        throw PermissionDenied();
+    currUser->showMoney();
+}
+
+void Network::logout() {
+    if (!isLoggedIn())
+        throw BadRequest();
+    currPub = nullptr;
+    currUser = nullptr;
 }

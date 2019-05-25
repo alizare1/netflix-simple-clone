@@ -12,6 +12,7 @@
 #include "defines.h"
 #include "exceptions.h"
 #include <algorithm>
+#include "recommender.h"
 
 class Film;
 
@@ -39,7 +40,8 @@ public:
     void showPurchasedFilms(SearchFilmsArgs& args);
     void showNewNotifs();
     void showNotifs(int limit);
-
+    void showMoney();
+    void logout();
 
 
 private:
@@ -50,8 +52,10 @@ private:
     void calculatePublisherCut(Film* film);
     void showRecomms(Film* currFilm);
     void inserFilmByScore(Film* film);
+    void* setAdmin();
 
-    int netWorkMoney;
+    Recommender recommender;
+    User* admin;
     User* currUser;
     Publisher* currPub;
     std::map<int, Film*> films;
