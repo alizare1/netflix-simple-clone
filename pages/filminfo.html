@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <title>Film Info</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+    </head>
+
+    <body class="p-3 mb-2 bg-dark text-white">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+            <a class="navbar-brand btn btn-dark" href="/home">HOME</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link btn btn-dark" href="/profile"><% cout << context["username"]; %> <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link btn btn-dark" href="/logout">Logout</a>
+                    </li>
+                </ul>
+                <form method="GET " class="form-inline my-2 my-lg-0" action="/home">
+                    <input class="form-control mr-sm-2" type="text" name="director" placeholder="Director" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <hr   /><br>
+
+        <% cout << context["films"]; %>
+        <% if (context["bought"] == "true") { %>
+        <form action="/rate" method="POST" class="score" style="margin-top: 1px">
+            <input type="hidden" name="film_id" value="<% cout <<  context["film_id"] << "\""; %>>
+            <input type="submit" id="star5" name="score" value="10" /><label class="full" for="star5" ></label>
+            <input type="submit" id="star4half" name="score" value="9" /><label class="half" for="star4half" ></label>
+            <input type="submit" id="star4" name="score" value="8" /><label class="full" for="star4" ></label>
+            <input type="submit" id="star3half" name="score" value="7" /><label class="half" for="star3half" ></label>
+            <input type="submit" id="star3" name="score" value="6" /><label class="full" for="star3" ></label>
+            <input type="submit" id="star2half" name="score" value="5" /><label class="half" for="star2half" ></label>
+            <input type="submit" id="star2" name="score" value="4" /><label class="full" for="star2" ></label>
+            <input type="submit" id="star1half" name="score" value="3" /><label class="half" for="star1half" ></label>
+            <input type="submit" id="star1" name="score" value="2" /><label class="full" for="star1" ></label>
+            <input type="submit" id="starhalf" name="score" value="1" /><label class="half" for="starhalf" ></label>
+        </form> <br style="clear: both"/>
+        <% } %>
+        <p class="summary"><% cout << context["summary"]; %> </p>
+        <% if (context["can_buy"] == "true") { %>
+        <form action="buy">
+            <input type="hidden" name="id" value="<% cout <<  context["film_id"] << "\""; %> />
+            <button class="btn btn-success">Buy</button>
+        </form> 
+        <% } %>
+        <hr>
+
+        <h5>Comments:</h5>
+        <div style="border-left: 3px solid rgba(17, 107, 12, 0.605); width: 600px; padding-left: 5px; background-color: #161a176a">
+            <% cout << context["comments"]; %>
+        </div>
+        <% if (context["bought"] == "true") { %>
+        <form id="cform" method="POST" action=<% cout << "/comment?id=" << context["film_id"]; %> >
+            <input type="text" name="comment" placeholder="Comment..." required>
+            <button style="margin: 5px" type="submit" class="btn btn-primary">Submit</button>
+        </form> 
+        <% } %>
+        <hr>
+        <div>
+            <h5>Recommended for you:</h5>
+            <% cout << context["recomms"]; %>
+        </div>
+    </body>
+</html>
+
+<style>
+
+        a {
+            color: #ddd;
+        }
+    
+    
+        sub {
+           font-size: 13px;
+           margin-left: 5px;
+           position: relative;
+        }
+    
+        p.summary {
+            font-size: 13px;
+            margin-left: 12px;
+        }
+    
+    
+        fieldset, label { margin: 0; padding: 0; }
+        body{ margin: 20px; }
+        h1 { font-size: 1.5em; margin: 10px; }
+    
+        /****** Style Star score Widget *****/
+    
+        .score { 
+          border: none;
+          float: left;
+        }
+    
+        .score > input { display: none; } 
+        .score > label:before { 
+          margin: 5px;
+          font-size: 1.25em;
+          font-family: FontAwesome;
+          display: inline-block;
+          content: "\f005";
+        }
+    
+        .score > .half:before { 
+          content: "\f089";
+          position: absolute;
+        }
+    
+        .score > label { 
+          color: #ddd; 
+         float: right; 
+        }
+    
+        /***** CSS Magic to Highlight Stars on Hover *****/
+    
+        .score > input:checked ~ label, /* show gold star when clicked */
+        .score:not(:checked) > label:hover, /* hover current star */
+        .score:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+    
+        .score > input:checked + label:hover, /* hover current star when changing score */
+        .score > input:checked ~ label:hover,
+        .score > label:hover ~ input:checked ~ label, /* lighten current selection */
+        .score > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+    </style>
