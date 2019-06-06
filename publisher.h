@@ -6,6 +6,7 @@
 #include "film.h"
 #include <iostream>
 #include <vector>
+#include <sstream>
 #include "structs.h"
 #include "defines.h"
 
@@ -16,14 +17,11 @@ class Publisher : public User {
 public:
     Publisher(SignupArgs args, int _id);
     void addNewFilm(Film* film);
-    void showFollowers();
-    void showFilms(SearchFilmsArgs args);
-    void addFollower(User* user);
+    std::string getFilms(std::string director);
     
 private:
     
     std::vector<Film*> producedFilms;
-    std::vector<User*> followers;
 
 };
 
