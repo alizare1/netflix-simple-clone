@@ -23,7 +23,7 @@ Network::~Network() {
         delete userIt->second;
 }
 
-void* Network::setAdmin() {
+void Network::setAdmin() {
     SignupArgs adminArgs;
     adminArgs.age = 0;
     adminArgs.email = ADMIN_MAIL;
@@ -31,55 +31,49 @@ void* Network::setAdmin() {
     adminArgs.publisher = false;
     adminArgs.username = ADMIN;
     admin = new User(adminArgs, 1);
-    usersById[0] = admin;
+    usersById[1] = admin;
     usersByName[ADMIN] = admin;
 }
 
-void Network::signup(SignupArgs& args) {
-    if (isLoggedIn())
-        throw BadRequest();
+int Network::signup(SignupArgs& args) {
     if (usersByName.count(args.username))
         throw BadRequest();
-    currPub = nullptr;
-    currUser = nullptr;
     User* newUser;
     if (args.publisher) {
         Publisher* newPub = new Publisher(args, usersById.size() + 1);
         publishers[newPub->getId()] = newPub;
         newUser = newPub;
-        currPub = newPub;
     }
     else
         newUser = new User(args, usersById.size() + 1);
     usersById[newUser->getId()] = newUser;
     usersByName[args.username] = newUser;
-    currUser = newUser;
+
+    return newUser->getId();
 }
 
-void Network::login(LoginArgs& args) {
-    if (isLoggedIn())
-        throw BadRequest();
+int Network::login(LoginArgs& args) {
     if (!usersByName.count(args.username))
         throw BadRequest();
-    if (usersByName[args.username]->checkPassword(args.password)) {
-        currUser = usersByName[args.username];
-        if (currUser->isPublisher())
-            currPub = publishers[currUser->getId()];
-        else
-            currPub = nullptr;
-    }
-    else 
-        throw BadRequest();
+    return usersByName[args.username]->getId();
 }
 
-void Network::addNewFilm(NewFilmArgs& args) {
-    if (!isPublisherLoggedIn())
-        throw PermissionDenied();
-    Film* newFilm = new Film(args, films.size() + 1, currPub);
+void Network::addNewFilm(NewFilmArgs& args, int sid) {
+    Film* newFilm = new Film(args, films.size() + 1, publishers[sid]);
     films[newFilm->getId()] = newFilm;
-    currPub->addNewFilm(newFilm);
+    publishers[sid]->addNewFilm(newFilm);
     filmsByScore.push_back(newFilm);
     recommender.addFilm(newFilm);
+}
+
+void Network::deleteFilm(int filmId, int sid) {
+    checkFilmOwnership(filmId, sid);
+    films[filmId]->deleteFilm();
+    films[-filmId] = films[filmId];
+    filmsByScore.erase(find(filmsByScore.begin(), 
+        filmsByScore.end(), films[filmId]));
+    recommender.removeFilm(films[filmId]);
+    films.erase(filmId);
 }
 
 void Network::editFilm(EditFilmArgs& args) {
@@ -97,23 +91,26 @@ void Network::deleteFilm(int filmId) {
     films.erase(filmId);
 }
 
-void Network::checkFilmOwnership(int filmId) {
-    if (!isPublisherLoggedIn())
+void Network::checkFilmOwnership(int filmId, int sid) {
+    if (!isPublisher(sid))
         throw PermissionDenied();
     if (!films.count(filmId))
         throw NotFound();
-    if(films[filmId]->getPublisher() != currPub)
+    if(films[filmId]->getPublisher() != publishers[sid])
         throw PermissionDenied();
+}
+
+void Network::addMoney(int sid, int amount) {
+    usersById[sid]->addMoney(amount);
+}
+
+void Network::commentOnFilm(string content, int sid, int filmId) {
+    films[filmId]->comment(content, usersById[sid]);
 }
 
 void Network::deleteComment(DeleteCommentArgs& args) {
     checkFilmOwnership(args.filmId);
     films[args.filmId]->deleteComment(args.commentId);
-}
-
-bool Network::isPublisherLoggedIn(){
-
-    return currPub != nullptr;
 }
 
 void Network::showFollowers() {
@@ -229,17 +226,10 @@ void Network::inserFilmByScore(Film* film) {
     }
 }
 
-void Network::buyFilm(int filmId) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    if (!films.count(filmId))
-        throw NotFound();
-    if (currUser->hasFilm(films[filmId]))
-        return;
-    currUser->buyFilm(films[filmId]);
-    sendNotif(films[filmId], BUY_YOUR_FILM);
+void Network::buyFilm(int sid, int filmId) {
+    usersById[sid]->buyFilm(films[filmId]);
     calculatePublisherCut(films[filmId]);
-    recommender.updateMatrix(films[filmId], currUser);
+    recommender.updateMatrix(films[filmId], usersById[sid]);
 }
 
 void Network::sendNotif(Film* film, string action) {
@@ -264,15 +254,14 @@ void Network::calculatePublisherCut(Film* film) {
     admin->addMoney(film->getPrice());
 }
 
-void Network::rateFilm(RateArgs& args) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    if (!films.count(args.filmId))
-        throw NotFound();
-    if (!currUser->hasFilm(films[args.filmId]))
-        throw PermissionDenied();
-    films[args.filmId]->rate(args.score, currUser->getId());
-    sendNotif(films[args.filmId], RATE_YOUR_FILM);
+void Network::rateFilm(RateArgs& args, int sid) {
+    films[args.filmId]->rate(args.score, sid);
+}
+
+bool Network::isPublisher(int sid) {
+    if (publishers.count(sid))
+        return true;
+    return false;
 }
 
 void Network::showNewNotifs() {
