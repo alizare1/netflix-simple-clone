@@ -2,26 +2,20 @@
 #define POST_H
 
 #include <iostream>
-#include "request.h"
+#include "myReq.h"
 #include "structs.h"
 #include "exceptions.h"
 #include "network.h"
 #include <regex>
 
-class Post : public Request {
+class Post : public MyRequest {
 public:
-    Post(Network* _network);
-
-private:
-    void signup(Args& args);
-    void login(Args& args);
-    void newFilm(Args& args);
+    int signup(Args& args);
+    int login(Args& args);
+    void newFilm(Args& args, int sid);
     void doMoneyCommand(Args& args);
-    void replyToComment(Args& args);
-    void followUser(Args& args);
-    void buyFilm(Args& args);
-    void rateFilm(Args& args);
-    void commentOnFilm(Args& args);
+    void rateFilm(Args& args, std::string sid);
+    void commentOnFilm(std::string content, std::string sid, std::string filmId);
     SignupArgs getSignupArgs(Args& args);
     LoginArgs getLoginArgs (Args& args);
     NewFilmArgs getNewFilmArgs(Args& args);
@@ -32,10 +26,9 @@ private:
     bool isEmailValid(const std::string email);
     void editFilm(Args& args);
     EditFilmArgs getFilmArgs(Args& args);
-    void deleteFilm(Args& args);
-    void deleteComment(Args& args);
-    DeleteCommentArgs getDeleteCommentArgs(Args& args);
-    void logout();
+    void deleteFilm(std::string filmId, std::string sid);
+    void addMoney(std::string sid, std::string amount);
+    void buyFilm(std::string sid, std::string filmId);
 
 };
 

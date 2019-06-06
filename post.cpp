@@ -2,118 +2,46 @@
 
 using namespace std;
 
-Post::Post(Network* _network)
-    :Request(_network) {
-    functionMap[SIGNUP] =
-        [this](Args args){ signup(args); };
-    functionMap[LOGIN] = 
-        [this](Args args){ login(args); };
-    functionMap[FILMS] =
-        [this](Args args){ newFilm(args); };
-    functionMap[MONEY] =
-        [this](Args args){ doMoneyCommand(args); };
-    functionMap[RELPIES] =
-        [this](Args args){ replyToComment(args); };
-    functionMap[FOLLOWERS] = 
-        [this](Args args){ followUser(args); };
-    functionMap[BUY] =
-        [this](Args args){ buyFilm(args); };
-    functionMap[RATE] =
-        [this](Args args){ rateFilm(args); };
-    functionMap[COMMENTS] =
-        [this](Args args){ commentOnFilm(args); };
-    functionMap[PUT_FILMS] = 
-        [this](Args args){ editFilm(args); };
-    functionMap[DELETE_FILMS] =
-        [this](Args args){ deleteFilm(args); };
-    functionMap[DELETE_COMMENTS] =
-        [this](Args args){ deleteComment(args); };
-    functionMap[LOGOUT] =
-        [this](Args args){ logout(); };
-}
-
-void Post::signup(Args& args) {
+int Post::signup(Args& args) {
     SignupArgs signupArgs = getSignupArgs(args);
-    network->signup(signupArgs) ;
+    return network->signup(signupArgs) ;
 }
 
-void Post::login(Args& args) {
+int Post::login(Args& args) {
     LoginArgs loginArgs = getLoginArgs(args);
-    network->login(loginArgs);
+    return network->login(loginArgs);
 }
 
-void Post::newFilm(Args& args) {
+void Post::newFilm(Args& args, int sid) {
     NewFilmArgs newFilmArgs = getNewFilmArgs(args);
-    network->addNewFilm(newFilmArgs);
+    network->addNewFilm(newFilmArgs, sid);
 }
 
-void Post::doMoneyCommand(Args& args) {
-    if (args.size() == 0)
-        network->withdrawMoney();
-    else {
-        if(!mapHasKey(args, AMOUNT))
-            throw BadRequest();
-        if (isNumber(args[AMOUNT])) 
-            network->addMoney(stoi(args[AMOUNT]));
-        else
-            throw BadRequest();
-    }
-}
-
-void Post::replyToComment(Args& args) {
-    ReplyArgs replyArgs = getReplyArgs(args);
-    network->replyToComment(replyArgs);
-}
-
-void Post::followUser(Args& args) {
-    if (!mapHasKey(args, USER_ID))
-        throw BadRequest();
-    isNumber(args[USER_ID]) ? network->follow(stoi(args[USER_ID])) : throw BadRequest();
-}
-
-void Post::buyFilm(Args& args) {
-    if (!mapHasKey(args, FILM_ID))
-        throw BadRequest();
-    isNumber(args[FILM_ID]) ? network->buyFilm(stoi(args[FILM_ID])) : throw BadRequest();
-}
-
-void Post::rateFilm(Args& args) {
+void Post::rateFilm(Args& args, string sid) {
     RateArgs rateArgs = getRateArgs(args);
-    network->rateFilm(rateArgs) ;
+    network->rateFilm(rateArgs, stoi(sid));
 }
 
-void Post::commentOnFilm(Args& args) {
-    CommentArgs commentArgs = getCommentArgs(args);
-    network->commentOnFilm(commentArgs) ;
+void Post::commentOnFilm(string content, string sid, string filmId) {
+    network->commentOnFilm(content, stoi(sid), stoi(filmId));
 }
 
 SignupArgs Post::getSignupArgs(Args& args) {
     SignupArgs signupArgs;
-    try {
-        signupArgs.username = args.at(USERNAME);
-        signupArgs.password = hashString(args.at(PASSWORD));
-        isEmailValid(args.at(EMAIL)) ? 
-            signupArgs.email = args.at(EMAIL) : throw BadRequest();
-        isNumber(args.at(AGE)) ?
-            signupArgs.age = stoi(args.at(AGE)) : throw BadRequest();
-        if (mapHasKey(args, PUBLISHER)) {
-            if (args.at(PUBLISHER) == TRUE)
-                signupArgs.publisher = true;
-            else if(args.at(PUBLISHER) == FALSE)
-                signupArgs.publisher = false;
-            else 
-                throw BadRequest();
-        }
-        else 
-            signupArgs.publisher = false;
-    }
-    catch (exception& e) {
-        throw BadRequest();
-    }
+
+    signupArgs.username = args.at(USERNAME);
+    signupArgs.password = hashString(args.at(PASSWORD));
+    signupArgs.email = args[EMAIL];
+    signupArgs.age = stoi(args[AGE]);
+    if (args.at(PUBLISHER) == TRUE)
+        signupArgs.publisher = true;
+    else if(args.at(PUBLISHER) == FALSE)
+        signupArgs.publisher = false;
+
     return signupArgs;
 }
 
-std::string Post::hashString(const std::string& str) {
+string Post::hashString(const std::string& str) {
     const int prime = 1027;
     const int mod = 1e9 + 9;
     long long hashedStr = 0;
@@ -133,32 +61,21 @@ bool Post::isEmailValid(const std::string email) {
 
 LoginArgs Post::getLoginArgs(Args& args) {
     LoginArgs loginArgs;
-    try {
-        loginArgs.username = args.at(USERNAME);
-        loginArgs.password = hashString(args.at(PASSWORD));
-    }
-    catch (exception& e) {
-        throw BadRequest();
-    }
+    loginArgs.username = args[USERNAME];
+    loginArgs.password = hashString(args[PASSWORD]);
     return loginArgs;
 }
 
 NewFilmArgs Post::getNewFilmArgs(Args& args) {
     NewFilmArgs newFilmArgs;
-    try {
-        newFilmArgs.summary = args.at(SUMMARY);
-        newFilmArgs.director = args.at(DIRECTOR);
-        newFilmArgs.name = args.at(NAME);
-        isNumber(args.at(PRICE)) ?
-            newFilmArgs.price = stoi(args.at(PRICE)) : throw BadRequest() ;
-        isNumber(args.at(YEAR)) ?
-            newFilmArgs.year = stoi(args.at(YEAR)) : throw BadRequest() ;
-        isNumber(args.at(LENGTH)) ?
-            newFilmArgs.length = stoi(args.at(LENGTH)) : throw BadRequest() ;
-    }
-    catch (exception& e) {
-        throw BadRequest() ;
-    }
+    
+    newFilmArgs.summary = args.at(SUMMARY);
+    newFilmArgs.director = args.at(DIRECTOR);
+    newFilmArgs.name = args.at(NAME);
+    newFilmArgs.price = stoi(args.at(PRICE));
+    newFilmArgs.year = stoi(args.at(YEAR));
+    newFilmArgs.length = stoi(args.at(LENGTH));
+
     return newFilmArgs;
 }
 
@@ -204,11 +121,6 @@ CommentArgs Post::getCommentArgs(Args& args) {
     return commentArgs;
 }
 
-void Post::editFilm(Args& args) {
-    EditFilmArgs filmArgs = getFilmArgs(args);
-    network->editFilm(filmArgs);
-}
-
 EditFilmArgs Post::getFilmArgs(Args& args) {
     EditFilmArgs filmArgs;
     try {
@@ -218,52 +130,32 @@ EditFilmArgs Post::getFilmArgs(Args& args) {
     catch(exception& e) {
         throw BadRequest();
     }
-    if (mapHasKey(args, NAME)) 
+    if (args.count(NAME)) 
         filmArgs.name = args[NAME];
-    if (mapHasKey(args, SUMMARY))
+    if (args.count(SUMMARY))
         filmArgs.summary = args[SUMMARY];
-    if (mapHasKey(args, DIRECTOR)) 
+    if (args.count(DIRECTOR)) 
         filmArgs.director = args[DIRECTOR];
-    if (mapHasKey(args, YEAR))
+    if (args.count(YEAR))
         isNumber(args.at(YEAR)) ?
             filmArgs.year = stoi(args.at(YEAR)) : throw BadRequest();
-    if (mapHasKey(args, LENGTH))
+    if (args.count(LENGTH))
         isNumber(args.at(LENGTH)) ?
             filmArgs.length = stoi(args.at(LENGTH)) : throw BadRequest();
-    if (mapHasKey(args, PRICE))
+    if (args.count(PRICE))
         isNumber(args.at(PRICE)) ?
             filmArgs.price = stoi(args.at(PRICE)) : throw BadRequest();
     return filmArgs;
 }
 
-void Post::deleteFilm(Args& args) {
-    if (mapHasKey(args, FILM_ID)) {
-        isNumber(args.at(FILM_ID)) ?
-            network->deleteFilm(stoi(args.at(FILM_ID))) : throw BadRequest();
-    }
-    else
-        throw BadRequest();
+void Post::deleteFilm(string filmId, string sid) {
+    network->deleteFilm(stoi(filmId), stoi(sid));
 }
 
-void Post::deleteComment(Args& args) {
-    DeleteCommentArgs commentArgs = getDeleteCommentArgs(args);
-    network->deleteComment(commentArgs);
+void Post::addMoney(string sid, string amount) {
+    network->addMoney(stoi(sid), stoi(amount));
 }
 
-DeleteCommentArgs Post::getDeleteCommentArgs(Args& args) {
-    DeleteCommentArgs commentArgs;
-    try {
-        isNumber(args.at(COMMENT_ID)) ?
-            commentArgs.commentId = stoi(args.at(COMMENT_ID)) : throw BadRequest() ;
-        isNumber(args.at(FILM_ID)) ?
-            commentArgs.filmId = stoi(args.at(FILM_ID)) : throw BadRequest() ;
-    }
-    catch (std::exception& e) {
-        throw BadRequest();
-    }
-    return commentArgs;
-}
-
-void Post::logout() {
-    network->logout();
+void Post::buyFilm(string sid, string filmId) {
+    network->buyFilm(stoi(sid), stoi(filmId));
 }
