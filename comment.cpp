@@ -9,23 +9,6 @@ Comment::Comment(string _content, User* _commenter, int _id, Film* _film) {
     content = _content;
 }
 
-void Comment::addReply(string reply) {
-    replies.push_back(reply);
-    commenter->addNotif(PUBLISHE_NOTIF + film->getPublisher()->getName()
-        + WITH_ID + to_string(film->getPublisher()->getId()) + REPLY_TO_COMMENT);
-}
-
-void Comment::printComment() {
-    cout << id << ". " << content << endl;
-    for (int i = 0; i < replies.size(); i++) 
-        cout << id << '.' << i + 1 << ". "  << replies[i] << endl;
-}
-
-ostream& operator<<(ostream& out, const Comment& c) {
-    out << c.id << ". " << c.content << endl;
-    for (int i = 0; i < c.replies.size(); i++) {
-        out << c.id << "." << i + 1 << ". " 
-            << c.replies[i] << endl;
-    }
-    return out;
+string Comment::getContent() {
+    return content;
 }

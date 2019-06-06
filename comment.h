@@ -14,15 +14,12 @@ class Film;
 class Comment {
 public:
     Comment(std::string _content, User* _commenter, int _id, Film*);
-    void addReply(std::string reply);
-    void printComment();
+    std::string getContent();
 private:
     int id;
     Film* film;
     User* commenter;
     std::string content;
-    std::vector<std::string> replies;
-    friend std::ostream& operator<<(std::ostream& out, const Comment& c);
 };
 
 #endif
