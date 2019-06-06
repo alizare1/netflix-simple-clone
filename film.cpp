@@ -46,14 +46,6 @@ void Film::comment(string text, User* user) {
     comments.push_back(cm);
 }
 
-void Film::replyToComment(ReplyArgs reply) {
-    if (reply.commentId > comments.size())
-        throw NotFound();
-    if (comments[reply.commentId - 1] == nullptr)
-        throw NotFound();
-    comments[reply.commentId - 1]->addReply(reply.content);
-}
-
 Publisher* Film::getPublisher() {
     return publisher;
 }
@@ -84,59 +76,37 @@ bool Film::isInFilter(SearchFilmsArgs args) {
     
 }
 
-ostream& operator<<(ostream& out, Film& film) {
-    out << film.id << " | " << film.name << " | "
-        << film.length << " | " << film.price << " | "
-        << film.getAverageScore() << " | " << film.year
-        << " | " << film.director;
-    return out;
+string Film::getFilmInfo() {
+    stringstream ss;
+    ss << "<td>" << "  <a style=\"color: #ddd\" href=\"filminfo?id=" << id << "\">" << name << "</a> </td>";
+    ss << "<td>" << director << "</td>";
+    ss << "<td>" << price << "</td>";
+    ss << "<td>" << getAverageScore() << "</td>";
+    ss << "<td>" << year << "</td>";
+    ss << "<td>" << length << "</td>";
+    return ss.str();
 }
 
-void Film::editFilm(EditFilmArgs& args) {
-    if (args.director != "")
-        director = args.director;
-    if (args.name != "")
-        name = args.name;
-    if (args.summary != "")
-        summary = args.summary;
-    if (args.year != NOT_STATED) 
-        year = args.year;
-    if (args.price != NOT_STATED)
-        price = args.price;
-    if (args.length != NOT_STATED)
-        length = args.length;
+string Film::showFilmInfo() {
+    stringstream ss;
+    ss << "<h4>" << name <<  "<sub>" << year << "</sub></h4>";
+    ss << "";
+    ss << "        <p style=\"font-size: 10px\">";
+    ss << "            <span>" << director << "</span>";
+    ss << "            &nbsp;&nbsp;-&nbsp;&nbsp;";
+    ss << "            <span>"<< length << "min</span>";
+    ss << "            &nbsp;&nbsp;-&nbsp;&nbsp;";
+    ss << "            <span>Rating: " << getAverageScore() << "/10</span>";
+    ss << "            &nbsp;&nbsp;-&nbsp;&nbsp;";
+    ss << "            <span>" << price << "$</span>";
+    ss << "        </p>";
+    return ss.str();
 }
 
-void Film::deleteComment(int cmId) {
-    if (cmId > comments.size() || cmId < 1)
-        throw NotFound();
-    if (comments[cmId - 1] == nullptr)
-        throw NotFound();
-    delete comments[cmId - 1];
-    comments[cmId - 1] = nullptr;
-}
-
-void Film::showFilmInfo() {
-    cout << SHOW_DETAILS_OF_FILM << name << endl
-        << ID << id << endl << DIRECTOR_INFO << director 
-        << endl << LENGTH_INFO << length << endl
-        << YEAR_INFO << year << endl << SUMMARY_INFO
-        << summary << endl << RATE_INFO << getAverageScore()
-        << endl << PRICE_INFO << price << endl;
-    cout << endl << COMMENTS_INFO << endl;
-    bool noComments = false;
-    for (int i = 0; i < comments.size(); i++) {
-        if (comments[i] != nullptr) {
-            cout << *comments[i] << endl; 
-            noComments = true;
-        }
-    }
-    if (!noComments)
-        cout << endl;
-}
-
-void Film::showAsRecom() {
-    cout << id << " | " << name << " | " << length << " | " << director;
+string Film::showAsRecom() {
+    stringstream ss;
+    ss << "<a href=\"filminfo?id=" << id << "\">" << name << "</a>" << "  " << length << "  " << director;
+    return ss.str();
 }
 
 int Film::getPrice() {
@@ -153,4 +123,16 @@ void Film::deleteFilm() {
 
 bool Film::isDeleted() {
     return deleted;
+}
+
+string Film::getComments() {
+    stringstream ss;
+    for (int i = 0; i < comments.size(); i++) {
+        ss << "<p>" << comments[i]->getContent() << "</p>";
+    }
+    return ss.str();
+}
+
+string Film::getSummary() {
+    return summary;
 }

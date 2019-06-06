@@ -8,6 +8,7 @@
 #include "publisher.h"
 #include "comment.h"
 #include "structs.h"
+#include <sstream>
 
 class Publisher;
 class Comment;
@@ -22,16 +23,15 @@ public:
     void rate(int score, int userId);
     float getAverageScore();
     void comment(std::string text, User* user);
-    void replyToComment(ReplyArgs reply);
     Publisher* getPublisher();
     bool isInFilter(SearchFilmsArgs args);
-    void editFilm(EditFilmArgs& args);
-    void deleteComment(int cmId);
-    void showFilmInfo();
-    void showAsRecom();
+    std::string showFilmInfo();
+    std::string showAsRecom();
     void deleteFilm();
     bool isDeleted();
-    friend std::ostream& operator<<(std::ostream& out, Film& film);
+    std::string getFilmInfo();
+    std::string getComments();
+    std::string getSummary();
 
 private:
 
