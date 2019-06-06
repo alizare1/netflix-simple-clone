@@ -76,16 +76,6 @@ void Network::deleteFilm(int filmId, int sid) {
     films.erase(filmId);
 }
 
-void Network::deleteFilm(int filmId) {
-    checkFilmOwnership(filmId);
-    films[filmId]->deleteFilm();
-    films[-filmId] = films[filmId];
-    filmsByScore.erase(find(filmsByScore.begin(), 
-        filmsByScore.end(), films[filmId]));
-    recommender.removeFilm(films[filmId]);
-    films.erase(filmId);
-}
-
 void Network::checkFilmOwnership(int filmId, int sid) {
     if (!isPublisher(sid))
         throw PermissionDenied();
@@ -101,32 +91,6 @@ void Network::addMoney(int sid, int amount) {
 
 void Network::commentOnFilm(string content, int sid, int filmId) {
     films[filmId]->comment(content, usersById[sid]);
-}
-
-void Network::showFilmInfo(int filmId) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    if (!films.count(filmId)) 
-        throw NotFound();
-    films[filmId]->showFilmInfo();
-    showRecomms(films[filmId]);
-}
-
-void Network::showRecomms(Film* currFilm) {
-    cout << RECOMMS_INFO << endl << RECOMMS_HEADER << endl;
-    int count = 0;
-    vector<Film*> sortedRecomList = recommender.getSortedRecomList(currFilm);
-    for (int i = 0; i < sortedRecomList.size(); i++) {
-        if (sortedRecomList[i] == currFilm)
-            continue;
-        if (currUser->hasFilm(sortedRecomList[i])) 
-            continue;
-        cout << ++count << ". ";
-        sortedRecomList[i]->showAsRecom();
-        cout << endl;
-        if (count == 4)
-            return;
-    }
 }
 
 void Network::inserFilmByScore(Film* film) {
@@ -166,4 +130,85 @@ bool Network::isPublisher(int sid) {
     if (publishers.count(sid))
         return true;
     return false;
+}
+
+string Network::getUsername(int sid) {
+    return usersById[sid]->getName();
+}
+
+string Network::getPublishedFilms(int sid, string director) {
+    return publishers[sid]->getFilms(director);
+}
+
+string Network::getAbleToBuyFilms(int sid) {
+    stringstream ss;
+    string tableTagsAndStuff;
+    map<int, Film*>::iterator it = films.begin();
+    int count = 0;
+
+    for (it ; it != films.end(); it++) {
+        if (usersById[sid]->getMoney() >= it->second->getPrice()) {
+            if (usersById[sid]->hasFilm(it->second))
+                continue;
+            ss << "<tr>" ;
+            ss << "<th scope=\"row\">" << ++count << "</th>";
+            ss << it->second->getFilmInfo();
+            ss << "<td>" << "<a style=\"color: #ddd\" href=\"/buy?id=" << it->first << "\"> Buy </a> </td>";
+            ss << "</tr>";
+        }
+
+    }
+
+    return ss.str();
+}
+
+string Network::getBoughtFilms(int sid) {
+    return usersById[sid]->getBoughtFilms();
+}
+
+string Network::getFilmInfo(int filmId) {
+    return films[filmId]->showFilmInfo();
+}
+
+bool Network::canBuy(int sid, int filmId) {
+    if (usersById[sid]->getMoney() >= films[filmId]->getPrice())
+        return true;
+    return false;
+}
+
+bool Network::hasFilm(int sid, int filmId) {
+    if (usersById[sid]->hasFilm(films[filmId]))
+        return true;
+    return false;
+}
+
+string Network::getComments(int filmId) {
+    return films[filmId]->getComments();
+}
+
+string Network::getRecomms(int sid, int filmId) {
+    int count = 0;
+    stringstream ss;
+    vector<Film*> sortedRecomList = recommender.getSortedRecomList(films[filmId]);
+    for (int i = 0; i < sortedRecomList.size(); i++) {
+        if (sortedRecomList[i] == films[filmId])
+            continue;
+        if (usersById[sid]->hasFilm(sortedRecomList[i])) 
+            continue;
+        ss << "<a href=\"filminfo?id=" << sortedRecomList[i]->getId() << "\">";
+        ss << ++count << ". ";
+        ss << sortedRecomList[i]->getName();
+        ss << "</a> <br>";
+        if (count == 4)
+            return ss.str();
+    }
+    return ss.str();
+}
+
+Film* Network::getFilm(int filmId) {
+    return films[filmId];
+}
+
+int Network::getMoney(int sid) {
+    return usersById[sid]->getMoney();
 }

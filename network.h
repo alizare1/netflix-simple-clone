@@ -13,6 +13,7 @@
 #include "exceptions.h"
 #include <algorithm>
 #include "recommender.h"
+#include <sstream>
 
 class Film;
 
@@ -32,7 +33,18 @@ public:
     void rateFilm(RateArgs& args, int sid);
     void showPurchasedFilms(SearchFilmsArgs& args);
     bool isPublisher(int sid);
+    std::string getUsername(int sid);
+    std::string getPublishedFilms(int sid, std::string director);
+    std::string getAbleToBuyFilms(int sid);
+    std::string getBoughtFilms(int sid);
+    std::string getFilmInfo(int filmId);
+    bool canBuy(int sid, int filmId);
+    bool hasFilm(int sid, int filmId);
+    std::string getComments(int filmId);
     void commentOnFilm(std::string content, int sid, int filmId);
+    std::string getRecomms(int sid, int filmId);
+    Film* getFilm(int filmId);
+    int getMoney(int sid);
 
 private:
     Network();
@@ -40,7 +52,6 @@ private:
     bool isPublisherLoggedIn();
     bool isLoggedIn();
     void calculatePublisherCut(Film* film);
-    void showRecomms(Film* currFilm);
     void inserFilmByScore(Film* film);
     void setAdmin();
 
