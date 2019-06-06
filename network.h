@@ -18,7 +18,7 @@ class Film;
 
 class Network {
 public:
-    Network();
+    static Network* getInstance();
     ~Network();
     void signup(SignupArgs& args);
     void login(LoginArgs& args);
@@ -45,6 +45,7 @@ public:
 
 
 private:
+    Network();
     void checkFilmOwnership(int filmId);
     bool isPublisherLoggedIn();
     bool isLoggedIn();
@@ -58,6 +59,7 @@ private:
     User* admin;
     User* currUser;
     Publisher* currPub;
+    static Network* instance;
     std::map<int, Film*> films;
     std::vector<Film*> filmsByScore;
     std::map<int, User*> usersById;

@@ -2,9 +2,15 @@
 
 using namespace std;
 
+Network* Network::instance = 0;
+
+Network* Network::getInstance() {
+    if (instance == 0)
+        instance = new Network();
+    return instance;
+}
+
 Network::Network() {
-    currUser = nullptr;
-    currPub = nullptr;
     setAdmin();
 }
 
