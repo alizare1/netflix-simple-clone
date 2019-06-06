@@ -76,11 +76,6 @@ void Network::deleteFilm(int filmId, int sid) {
     films.erase(filmId);
 }
 
-void Network::editFilm(EditFilmArgs& args) {
-    checkFilmOwnership(args.filmId);
-    films[args.filmId]->editFilm(args);
-}
-
 void Network::deleteFilm(int filmId) {
     checkFilmOwnership(filmId);
     films[filmId]->deleteFilm();
@@ -106,88 +101,6 @@ void Network::addMoney(int sid, int amount) {
 
 void Network::commentOnFilm(string content, int sid, int filmId) {
     films[filmId]->comment(content, usersById[sid]);
-}
-
-void Network::deleteComment(DeleteCommentArgs& args) {
-    checkFilmOwnership(args.filmId);
-    films[args.filmId]->deleteComment(args.commentId);
-}
-
-void Network::showFollowers() {
-    if (!isPublisherLoggedIn())
-        throw PermissionDenied();
-    currPub->showFollowers();
-}
-
-void Network::follow(int PubId) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    if (!publishers.count(PubId))
-        throw NotFound();
-    publishers[PubId]->addFollower(currUser);
-}
-
-void Network::addMoney(int amount) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    currUser->addMoney(amount);
-}
-
-void Network::withdrawMoney() {
-    if (!isPublisherLoggedIn())
-        throw PermissionDenied();
-    currPub->addMoney(publishersMoney[currPub->getId()]);
-    admin->substractMoney(publishersMoney[currPub->getId()]);
-    publishersMoney[currPub->getId()] = 0;
-}
-
-bool Network::isLoggedIn() {
-    return currUser != nullptr;
-}
-
-void Network::getPublishedFilms(SearchFilmsArgs& args) {
-    if (!isPublisherLoggedIn())
-        throw PermissionDenied();
-    currPub->showFilms(args);
-}
-
-void Network::replyToComment(ReplyArgs& args) {
-    checkFilmOwnership(args.filmId);
-    films[args.filmId]->replyToComment(args);
-}
-
-void Network::commentOnFilm(CommentArgs& args) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    if (!films.count(args.filmId))
-        throw NotFound();
-    if (!currUser->hasFilm(films[args.filmId]))
-        throw PermissionDenied();
-    films[args.filmId]->comment(args.content, currUser);
-    sendNotif(films[args.filmId], COMMENT_ON_FILM);
-}
-
-void Network::searchFilms(SearchFilmsArgs& args) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    cout << GET_FILMS_HEADER << endl;
-    std::map<int, Film*>::iterator it = films.begin();
-    int counter = 1;
-    while (it != films.end()) {
-        if (it->first< 0) {
-            it++;
-            continue;
-        }
-        if (it->second->isInFilter(args))
-            cout << counter++ << ". " << *(it->second) << endl;
-        it++;
-    }
-}
-
-void Network::showPurchasedFilms(SearchFilmsArgs& args) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    currUser->showPurchasedFilms(args);
 }
 
 void Network::showFilmInfo(int filmId) {
@@ -232,15 +145,6 @@ void Network::buyFilm(int sid, int filmId) {
     recommender.updateMatrix(films[filmId], usersById[sid]);
 }
 
-void Network::sendNotif(Film* film, string action) {
-    film->getPublisher()->addNotif (
-            USER_NOTIF + currUser->getName() 
-            + WITH_ID + to_string(currUser->getId()) + action
-            + film->getName() + WITH_ID + 
-            to_string(film->getId()) + "."
-        );
-}
-
 void Network::calculatePublisherCut(Film* film) {
     float score = film->getAverageScore();
     int PubsCut;
@@ -262,29 +166,4 @@ bool Network::isPublisher(int sid) {
     if (publishers.count(sid))
         return true;
     return false;
-}
-
-void Network::showNewNotifs() {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    currUser->showNewNotifs();
-}
-
-void Network::showNotifs(int limit) {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    currUser->showNotifs(limit);
-}
-
-void Network::showMoney() {
-    if (!isLoggedIn())
-        throw PermissionDenied();
-    currUser->showMoney();
-}
-
-void Network::logout() {
-    if (!isLoggedIn())
-        throw BadRequest();
-    currPub = nullptr;
-    currUser = nullptr;
 }

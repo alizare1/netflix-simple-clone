@@ -23,44 +23,30 @@ public:
     int signup(SignupArgs& args);
     int login(LoginArgs& args);
     void addNewFilm(NewFilmArgs& args, int sid);
-    void editFilm(EditFilmArgs& args);
     void deleteFilm(int filmId, int sid);
     void addMoney(int sid, int amount);
-    void deleteComment(DeleteCommentArgs& args);
-    void showFollowers();
-    void withdrawMoney();
-    void addMoney(int amount);
     void getPublishedFilms(SearchFilmsArgs& args);
-    void replyToComment(ReplyArgs& args);
-    void follow(int pubId);
     void searchFilms(SearchFilmsArgs& args);
     void showFilmInfo(int filmId);
     void buyFilm(int sid, int filmId);
     void rateFilm(RateArgs& args, int sid);
-    bool isPublisher(int sid);
-    void commentOnFilm(CommentArgs& args);
     void showPurchasedFilms(SearchFilmsArgs& args);
+    bool isPublisher(int sid);
     void commentOnFilm(std::string content, int sid, int filmId);
-    void showNewNotifs();
-    void showNotifs(int limit);
-    void showMoney();
-    void logout();
-
 
 private:
     Network();
     void checkFilmOwnership(int filmId , int sid);
     bool isPublisherLoggedIn();
     bool isLoggedIn();
-    void sendNotif(Film* film, std::string action);
     void calculatePublisherCut(Film* film);
     void showRecomms(Film* currFilm);
     void inserFilmByScore(Film* film);
     void setAdmin();
 
+    static Network* instance;
     Recommender recommender;
     User* admin;
-    static Network* instance;
     std::map<int, Film*> films;
     std::vector<Film*> filmsByScore;
     std::map<int, User*> usersById;
