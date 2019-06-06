@@ -2,83 +2,66 @@
 
 using namespace std;
 
-Get::Get(Network* _network)
-    :Request(_network) {
-    functionMap[FOLLOWERS] =
-        [this](Args args){ getFollowers(args); };
-    functionMap[PUBLISHED] =
-        [this](Args args){ getPublishedFilms(args); };
-    functionMap[FILMS] =
-        [this](Args args){ getFilms(args); };
-    functionMap[PURCHASED] = 
-        [this](Args args){ showPurchasedFilms(args); };
-    functionMap[NOTIFICATION] =
-        [this](Args args){ showNewNotifs(); };
-    functionMap[NOTIFICATION_READ] =
-        [this](Args args){ showNotifs(args); };
-    functionMap[MONEY] =
-        [this](Args args){ showMoney(); };
+bool Get::isPublisher(string sid) {
+    return network->isPublisher(stoi(sid));
 }
 
-void Get::getFollowers(Args& args) {
-    network->showFollowers();
+string Get::getUsername(string sid) {
+    return network->getUsername(stoi(sid));
 }
 
-void Get::getPublishedFilms(Args& args) {
-    SearchFilmsArgs publishedArgs = getSearchArgs(args);
-    network->getPublishedFilms(publishedArgs);
-}
-
-void Get::getFilms(Args& args) {
-    if (mapHasKey(args, FILM_ID)) {
-        isNumber(args.at(FILM_ID)) ?
-            network->showFilmInfo(stoi(args.at(FILM_ID))) : throw BadRequest();
-        return;
-    }
-    SearchFilmsArgs searchArgs = getSearchArgs(args);
-    network->searchFilms(searchArgs);
-}
-
-void Get::showPurchasedFilms(Args& args) {
-    SearchFilmsArgs purchasedArgs = getSearchArgs(args);
-    network->showPurchasedFilms(purchasedArgs);
-}
-
-void Get::showNewNotifs() {
-    network->showNewNotifs();
-}
-
-void Get::showNotifs(Args& args) {
-    if (mapHasKey(args, LIMIT)) {
-        isNumber(args.at(LIMIT)) ?
-            network->showNotifs(stoi(args.at(LIMIT))) : throw BadRequest();
-    }
-}
-
-void Get::showMoney() {
-    network->showMoney();
+string Get::getPublishedFilms(string sid, string director) {
+    return network->getPublishedFilms(stoi(sid), director);
 }
 
 SearchFilmsArgs Get::getSearchArgs(Args& args) {
     SearchFilmsArgs publishedArgs;
-    if (mapHasKey(args, NAME))
+    if (args.count(NAME))
         publishedArgs.name = args[NAME];
-    if (mapHasKey(args, DIRECTOR))
+    if (args.count(DIRECTOR))
         publishedArgs.director = args[DIRECTOR];
-    if (mapHasKey(args, MIN_RATE))
+    if (args.count(MIN_RATE))
         isNumber(args.at(MIN_RATE)) ?
             publishedArgs.minRate = stoi(args.at(MIN_RATE)) : throw BadRequest();
-    if (mapHasKey(args, MAX_RATE))
+    if (args.count(MAX_RATE))
         isNumber(args.at(MAX_RATE)) ?
             publishedArgs.maxRate = stoi(args.at(MAX_RATE)) : throw BadRequest();
-    if (mapHasKey(args, MIN_YEAR))
+    if (args.count(MIN_YEAR))
         isNumber(args.at(MIN_YEAR)) ?
             publishedArgs.minYear = stoi(args.at(MIN_YEAR)) : throw BadRequest();
-    if (mapHasKey(args, MAX_YEAR))
+    if (args.count(MAX_YEAR))
         isNumber(args.at(MAX_YEAR)) ?
             publishedArgs.maxYear = stoi(args.at(MAX_YEAR)) : throw BadRequest();
-    if (mapHasKey(args, PRICE))
+    if (args.count(PRICE))
         isNumber(args.at(PRICE)) ?
             publishedArgs.price = stoi(args.at(PRICE)) : throw BadRequest();
     return publishedArgs;
+}
+
+string Get::getAbleToBuyFilms(string sid) {
+    return network->getAbleToBuyFilms(stoi(sid));
+}
+
+string Get::getBoughtMovies(string sid) {
+    return network->getBoughtFilms(stoi(sid));
+}
+
+string Get::getFilmInfo(string filmId) {
+    return network->getFilmInfo(stoi(filmId));
+}
+
+bool Get::canBuy(string sid, string filmId) {
+    return network->canBuy(stoi(sid), stoi(filmId));
+}
+
+bool Get::hasFilm(string sid, string filmId) {
+    return network->hasFilm(stoi(sid), stoi(filmId));
+}
+
+string Get::getComments(string filmId){
+    return network->getComments(stoi(filmId));
+}
+
+string Get::getRecomms(string sid, string filmId) {
+    return network->getRecomms(stoi(sid), stoi(filmId));
 }
