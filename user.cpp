@@ -30,48 +30,8 @@ bool User::isPublisher() {
     return isPub;
 }
 
-void User::addNotif(string notif) {
-    newNotifications.push_back(notif);
-}
-
-void User::showNotifs(int limit) {
-    cout << NOTIF_HEADER << endl;
-    int lastIndex = notifications.size() - 1;
-    int count = 1;
-    for (int i = lastIndex; i > lastIndex - limit && i >= 0; i--) {
-        cout << count++ << ". " << notifications[i] << endl;
-    }
-}
-
-void User::showNewNotifs() {
-    cout << NOTIF_HEADER << endl;
-    int lastIndex = newNotifications.size() - 1;
-    int count = 1;
-    for (int i = lastIndex; i >= 0; i--)
-        cout << count++ << ". " << newNotifications[i] << endl;
-    for (int i = 0; i <= lastIndex; i++) {
-        notifications.push_back(newNotifications[i]);
-        newNotifications.erase(newNotifications.begin() + i);
-    }
-}
-
 std::string User::getName() {
     return username;
-}
-
-ostream& operator<<(ostream& out, User& user) {
-    out << user.id  << " | " << user.username 
-        << " | " << user.email;
-    return out;
-}
-
-void User::showPurchasedFilms(SearchFilmsArgs& args) {
-    cout << GET_FILMS_HEADER << endl;
-    int count = 1;
-    for (int i = 0; i < boughtFilms.size(); i++) {
-        if (boughtFilms[i]->isInFilter(args))
-            cout << count++ << ". " << *(boughtFilms[i]) << endl;
-    }
 }
 
 void User::buyFilm(Film* film) {
@@ -95,10 +55,22 @@ bool User::hasFilm(Film* film) {
     return false;
 }
 
-void User::showMoney() {
-    cout << money << endl;
-}
-
 void User::substractMoney(int amount) {
     money -= amount;
+}
+
+int User::getMoney() {
+    return money;
+}
+
+string User::getBoughtFilms() {
+    stringstream ss;
+    for (int i = 0 ; i < boughtFilms.size(); i++) {
+        ss << "<tr>" ;
+        ss << "<th scope=\"row\">" << i + 1 << "</th>";
+        ss << boughtFilms[i]->getFilmInfo(); 
+        ss << "<tr>";
+    }
+
+    return ss.str();
 }
